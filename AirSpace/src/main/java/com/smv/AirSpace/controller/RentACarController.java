@@ -27,6 +27,8 @@ public class RentACarController {
 	public ResponseEntity<VehicleDTO> addVehicle(@RequestBody VehicleDTO vehicleDTO){
 			
 		rentACarService.addVehicle(vehicleDTO);
+		System.out.println("aaaaaaaa");
+		System.out.println(vehicleDTO.getModel());
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

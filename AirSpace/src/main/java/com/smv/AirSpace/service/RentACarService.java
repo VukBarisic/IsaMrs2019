@@ -21,7 +21,11 @@ public class RentACarService {
 	
 	public List<Vehicle> getAllVehicles(){
 		Vehicle vehicle1 = new Vehicle(1L, "Opel", 5);
+		Vehicle vehicle2 = new Vehicle(2L, "Mercedes", 5);
+		Vehicle vehicle3 = new Vehicle(3L, "BMW", 4);
 		vehicles.add(vehicle1);
+		vehicles.add(vehicle2);
+		vehicles.add(vehicle3);
 		
 		return vehicles;
 	}

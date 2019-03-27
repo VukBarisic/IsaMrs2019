@@ -13,20 +13,22 @@ public class Seat {
 	private Long id;
 	private int row;
 	private String column;
-	private TravelClass travelClass;
 	private boolean occupied;
+	private SeatType seatType;
+	
 
-	public Seat(){
-
+	public Seat() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-
-	public Seat(Long id, int row, String column, TravelClass travelClass, boolean occupied) {
+	public Seat(Long id, int row, String column, boolean occupied, SeatType seatType) {
+		super();
 		this.id = id;
 		this.row = row;
 		this.column = column;
-		this.travelClass = travelClass;
 		this.occupied = occupied;
+		this.seatType = seatType;
 	}
 
 
@@ -34,39 +36,52 @@ public class Seat {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public int getRow() {
 		return row;
 	}
 
+
 	public void setRow(int row) {
 		this.row = row;
 	}
+
 
 	public String getColumn() {
 		return column;
 	}
 
+
 	public void setColumn(String column) {
 		this.column = column;
 	}
 
-	public TravelClass getTravelClass() {
-		return travelClass;
-	}
-
-	public void setTravelClass(TravelClass travelClass) {
-		this.travelClass = travelClass;
-	}
 
 	public boolean isOccupied() {
 		return occupied;
 	}
 
+
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
+
+
+	public SeatType getSeatType() {
+		return seatType;
+	}
+
+
+	public void setSeatType(SeatType seatType) {
+		this.seatType = seatType;
+	}
+	
+
+
 }
+
