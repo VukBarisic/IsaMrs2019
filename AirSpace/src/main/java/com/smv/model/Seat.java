@@ -1,7 +1,15 @@
 package com.smv.model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Seat {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private int row;
 	private String column;

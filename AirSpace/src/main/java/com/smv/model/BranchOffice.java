@@ -1,9 +1,15 @@
 package com.smv.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table (name = "branchoffce")
 public class BranchOffice {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String officeName;
 	private Location location;

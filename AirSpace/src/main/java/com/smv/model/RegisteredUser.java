@@ -1,7 +1,10 @@
 package com.smv.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
-
+@Entity
+@Table(name = "registereduser")
 public class RegisteredUser extends User {
 	
 	protected String name;

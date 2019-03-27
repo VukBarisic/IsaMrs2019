@@ -1,9 +1,16 @@
 package com.smv.model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
 public class Rentacar {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String name;
 	private String description;

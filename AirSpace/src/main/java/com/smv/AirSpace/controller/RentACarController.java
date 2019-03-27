@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class RentACarController {
 	}
 	
 	//Get all vehicles
-	@RequestMapping(value="/getVehicles", method = RequestMethod.GET)
+	@RequestMapping(value="/getVehicles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Vehicle>> getVehicles(){
 		try {
 			System.out.println("kontroler");

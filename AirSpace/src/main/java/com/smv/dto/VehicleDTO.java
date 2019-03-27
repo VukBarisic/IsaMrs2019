@@ -10,7 +10,7 @@ public class VehicleDTO {
 		super();
 	}
 	public VehicleDTO(String model, int numOfSeats) {
-		super();
+
 		this.model = model;
 		this.numOfSeats = numOfSeats;
 	}

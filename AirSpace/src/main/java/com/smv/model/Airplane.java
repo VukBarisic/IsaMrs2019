@@ -1,27 +1,29 @@
 package com.smv.model;
 
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table (name = "airplane")
 public class Airplane {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String model;
-	private TravelClass firstClass;
-	private TravelClass businessClass;
-	private TravelClass economyClass;
-
+	private List<Seat> seats;
 
 	public Airplane(){
 
 	}
 
-	public Airplane(Long id, String model, TravelClass firstClass, TravelClass businessClass, TravelClass economyClass) {
+	public Airplane(Long id, String model, List<Seat> seats) {
 		this.id = id;
 		this.model = model;
-		this.firstClass = firstClass;
-		this.businessClass = businessClass;
-		this.economyClass = economyClass;
+		this.seats = seats;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -39,27 +41,18 @@ public class Airplane {
 		this.model = model;
 	}
 
-	public TravelClass getFirstClass() {
-		return firstClass;
+	public List<Seat> getSeats() {
+		return seats;
 	}
 
-	public void setFirstClass(TravelClass firstClass) {
-		this.firstClass = firstClass;
+	public void setSeats(List<Seat> seats) {
+		this.seats = seats;
 	}
 
-	public TravelClass getBusinessClass() {
-		return businessClass;
-	}
 
-	public void setBusinessClass(TravelClass businessClass) {
-		this.businessClass = businessClass;
-	}
 
-	public TravelClass getEconomyClass() {
-		return economyClass;
-	}
 
-	public void setEconomyClass(TravelClass economyClass) {
-		this.economyClass = economyClass;
-	}
+
+
+
 }

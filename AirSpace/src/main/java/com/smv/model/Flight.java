@@ -5,8 +5,15 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+
+@Entity
+@Table (name = "flight")
 public class Flight {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String flightNumber;
 	private Airplane airplane;

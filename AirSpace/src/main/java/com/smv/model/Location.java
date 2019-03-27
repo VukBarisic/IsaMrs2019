@@ -2,8 +2,15 @@ package com.smv.model;
 
 import org.springframework.data.geo.Point;
 
+import javax.persistence.*;
+
+@Entity
+@Table (name = "location")
 public class Location {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	protected Address address;
 	protected double x;

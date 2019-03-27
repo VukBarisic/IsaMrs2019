@@ -1,7 +1,14 @@
 package com.smv.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table (name = "airport")
 public class Airport {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String name;
 	private String label;
