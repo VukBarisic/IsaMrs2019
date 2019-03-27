@@ -18,6 +18,14 @@ public class Vehicle {
 		this.available = available;
 		this.rating = rating;
 	}
+	
+	public Vehicle(Long id, String model, int numOfSeats) {
+		this.id = id;
+		this.model = model;
+		this.numOfSeats = numOfSeats;
+		this.available = true;
+		this.rating = 100.0;
+	}
 
 	public Long getId() {
 		return id;
