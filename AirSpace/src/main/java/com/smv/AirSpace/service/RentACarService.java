@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.smv.dto.VehicleDTO;
-import com.smv.model.Vehicle;
+import com.smv.AirSpace.dto.VehicleDTO;
+import com.smv.AirSpace.model.Vehicle;
 
 @Service
 public class RentACarService {

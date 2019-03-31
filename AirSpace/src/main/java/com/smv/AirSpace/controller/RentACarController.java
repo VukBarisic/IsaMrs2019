@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smv.AirSpace.dto.VehicleDTO;
+import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.service.RentACarService;
-import com.smv.dto.VehicleDTO;
-import com.smv.model.Vehicle;
 
 @RestController
 @RequestMapping(value = "/rentacar")

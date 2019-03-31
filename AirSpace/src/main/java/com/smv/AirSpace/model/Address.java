@@ -1,4 +1,4 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
 import javax.persistence.*;
 

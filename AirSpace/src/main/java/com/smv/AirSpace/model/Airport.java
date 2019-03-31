@@ -1,6 +1,13 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table (name = "airport")
@@ -10,16 +17,19 @@ public class Airport {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
+	private String airportId;
 	private String name;
 	private String label;
+    @OneToOne(fetch = FetchType.EAGER)
 	private Location location;
 
 	public Airport(){
 
 	}
 
-	public Airport(Long id, String name, String label, Location location) {
+	public Airport(Long id,String airportId, String name, String label, Location location) {
 		this.id = id;
+		this.setAirportId(airportId);
 		this.name = name;
 		this.label = label;
 		this.location = location;
@@ -55,5 +65,13 @@ public class Airport {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	public String getAirportId() {
+		return airportId;
+	}
+
+	public void setAirportId(String airportId) {
+		this.airportId = airportId;
 	}
 }

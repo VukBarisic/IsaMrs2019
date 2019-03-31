@@ -1,20 +1,29 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     protected Long id;
     protected String username;
     protected String password;
     protected String email;
+	@Enumerated(EnumType.ORDINAL)
     protected UserStatus userStatus;
+	@Enumerated(EnumType.ORDINAL)
     protected UserType userType;
 
 
@@ -23,9 +32,9 @@ public class User {
     }
 
 
-    public User(Long id, String username, String password, String email, UserStatus userStatus, UserType userType) {
-        this.id = id;
-        this.username = username;
+    public User(String username, String password, String email, UserStatus userStatus, UserType userType) {
+        super();
+    	this.username = username;
         this.password = password;
         this.email = email;
         this.userStatus = userStatus;

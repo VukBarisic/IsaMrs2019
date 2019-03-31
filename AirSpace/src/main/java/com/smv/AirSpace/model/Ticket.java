@@ -1,10 +1,17 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table (name = "ticket")
 public class Ticket {
 
 	@Id
@@ -13,7 +20,9 @@ public class Ticket {
 	private Long id;
 	private double price;
 	private double discount;
+    @ManyToOne(fetch = FetchType.EAGER)
 	private Flight flight;
+    @OneToOne(fetch = FetchType.LAZY)
 	private Seat seat;
 
 	public Ticket(){

@@ -1,11 +1,13 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table (name = "flight")
@@ -16,9 +18,9 @@ public class Flight {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String flightNumber;
-	private Airplane airplane;
-	private Airport From;
-	private Airport To;
+	private String airplaneModel;
+	private String fromAirportId;
+	private String toAirportId;
 	private LocalDateTime departureDateTime;
 	private LocalDateTime arrivalDateTime;
 
@@ -27,12 +29,12 @@ public class Flight {
 
 	}
 
-	public Flight(Long id, String flightNumber, Airplane airplane, Airport from, Airport to, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime) {
+	public Flight(Long id, String flightNumber, String airplaneModel, String fromAirportId, String toAirportId, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime) {
 		this.id = id;
 		this.flightNumber = flightNumber;
-		this.airplane = airplane;
-		From = from;
-		To = to;
+		this.airplaneModel = airplaneModel;
+		this.setFromAirportId(fromAirportId);
+		this.setToAirportId(toAirportId);
 		this.departureDateTime = departureDateTime;
 		this.arrivalDateTime = arrivalDateTime;
 	}
@@ -54,29 +56,14 @@ public class Flight {
 		this.flightNumber = flightNumber;
 	}
 
-	public Airplane getAirplane() {
-		return airplane;
+	public String getAirplaneModel() {
+		return airplaneModel;
 	}
 
-	public void setAirplane(Airplane airplane) {
-		this.airplane = airplane;
+	public void setAirplane(String airplaneModel) {
+		this.airplaneModel = airplaneModel;
 	}
 
-	public Airport getFrom() {
-		return From;
-	}
-
-	public void setFrom(Airport from) {
-		From = from;
-	}
-
-	public Airport getTo() {
-		return To;
-	}
-
-	public void setTo(Airport to) {
-		To = to;
-	}
 
 	public LocalDateTime getDepartureDateTime() {
 		return departureDateTime;
@@ -92,5 +79,21 @@ public class Flight {
 
 	public void setArrivalDateTime(LocalDateTime arrivalDateTime) {
 		this.arrivalDateTime = arrivalDateTime;
+	}
+
+	public String getFromAirportId() {
+		return fromAirportId;
+	}
+
+	public void setFromAirportId(String fromAirportId) {
+		this.fromAirportId = fromAirportId;
+	}
+
+	public String getToAirportId() {
+		return toAirportId;
+	}
+
+	public void setToAirportId(String toAirportId) {
+		this.toAirportId = toAirportId;
 	}
 }

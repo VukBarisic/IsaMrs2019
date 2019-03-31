@@ -1,4 +1,4 @@
-package com.smv.dto;
+package com.smv.AirSpace.dto;
 
 public class VehicleDTO {
 	

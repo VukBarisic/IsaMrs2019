@@ -1,11 +1,19 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table (name = "rentacar")
 public class Rentacar {
 
 	@Id
@@ -15,8 +23,8 @@ public class Rentacar {
 	private String name;
 	private String description;
 	private double rating;
-	private List<BranchOffice> branchOffices;
-
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<BranchOffice> branchOffices;
 	public Rentacar(){
 
 	}

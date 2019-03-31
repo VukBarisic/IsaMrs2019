@@ -1,7 +1,17 @@
-package com.smv.model;
+package com.smv.AirSpace.model;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table (name = "hotel")
@@ -15,13 +25,10 @@ public class Hotel {
 	private int stars;
 	private String description;
 	private double rating;
+    @OneToOne(fetch = FetchType.EAGER)
 	private Location location;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Room> rooms;
-	
-	
-	
-	
-	
 	
 	public Hotel() {
 	}
@@ -90,7 +97,5 @@ public class Hotel {
 	public void setRooms(List<Room> rooms) {
 		this.rooms = rooms;
 	}
-
-	
 
 }
