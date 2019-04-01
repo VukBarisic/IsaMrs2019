@@ -27,7 +27,7 @@ public class Hotel {
 	private int stars;
 	private String description;
 	private double rating;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Location location;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Room> rooms;
@@ -49,9 +49,6 @@ public class Hotel {
 		this.stars = hotelDTO.getStars();
 		this.description = hotelDTO.getDescription();
 		this.rating = 0.0;
-		this.location.getAddress().setCity(hotelDTO.getCity());
-		this.location.getAddress().setStreet(hotelDTO.getStreet());
-		this.location.getAddress().setState(hotelDTO.getState());
 	}
 
 	public Long getId() {

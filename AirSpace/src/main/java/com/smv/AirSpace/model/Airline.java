@@ -39,6 +39,9 @@ public class Airline {
 		this.location.getAddress().setStreet(airlineDTO.getStreet());
 		this.location.getAddress().setState(airlineDTO.getState());
 	}
+    
+    public Airline() {
+	}
 
 	public Airline(String name, String description, double rating, Location location) {
 		this.name = name;

@@ -5,13 +5,16 @@ import org.springframework.stereotype.Service;
 
 import com.smv.AirSpace.dto.AirlineDTO;
 import com.smv.AirSpace.dto.HotelDTO;
+import com.smv.AirSpace.model.Address;
 import com.smv.AirSpace.model.Airline;
 import com.smv.AirSpace.model.Hotel;
+import com.smv.AirSpace.model.Location;
 import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.model.UserStatus;
 import com.smv.AirSpace.model.UserType;
 import com.smv.AirSpace.repository.AirlineRepository;
 import com.smv.AirSpace.repository.HotelRepository;
+import com.smv.AirSpace.repository.LocationRepository;
 import com.smv.AirSpace.repository.UserRepository;
 
 @Service
@@ -25,6 +28,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private AirlineRepository airlineRepository;
+	
+	@Autowired
+	private LocationRepository locationRepository;
 	//@Autowired
 	//private PasswordEncoder passwordEncoder;
 	
@@ -105,10 +111,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean saveHotel(HotelDTO hotelDTO) {
-		
-		if (hotelDTO.getName() == "" ||  existsHotelName(hotelDTO.getName())) return false;
-		
+		if (hotelDTO.getName() == "" ||  existsHotelName(hotelDTO.getName())) {
+			System.out.println("s");
+			return false;
+		}
 		Hotel hotel = new Hotel(hotelDTO);
+		Address address = new Address(hotelDTO.getStreet(),hotelDTO.getCity(), hotelDTO.getState());
+		Location location = new Location(address);
+		hotel.setLocation(location);
 		hotelRepository.save(hotel);
 		return true;
 		
