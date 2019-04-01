@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smv.AirSpace.model.User;
-import com.smv.AirSpace.service.UserServiceImpl;
+import com.smv.AirSpace.dto.AirlineDTO;
+import com.smv.AirSpace.dto.HotelDTO;
+import com.smv.AirSpace.dto.UserDTO;
+import com.smv.AirSpace.service.UserService;
 
 
 @RestController
@@ -19,16 +21,60 @@ import com.smv.AirSpace.service.UserServiceImpl;
 public class SysAdminContoller {
 	
 	@Autowired
-	UserServiceImpl userService;
+	UserService userService;
 	
 	@RequestMapping(value = "/add_system_admin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> saveSysAdmin(@RequestBody User user){
-		boolean success = true;
+	public ResponseEntity<Boolean> addSysAdmin(@RequestBody UserDTO userDTO) {
+		 try {
+	
+	    	boolean retValue = userService.saveAdmin(userDTO.getUsername(), userDTO.getUserType());
+	
+		    if (retValue) return new ResponseEntity<Boolean>(retValue, HttpStatus.CREATED);
+	
+		    return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+	
+		 }
 		
-		success = userService.saveAdmin(user);
+		 catch (Exception e) {
 		
+			 return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+			        }
+		}
+	
+	@RequestMapping(value = "/add_hotel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> addHotel(@RequestBody HotelDTO hotelDTO) {
+		 try {
+				
+		    	boolean retValue = userService.saveHotel(hotelDTO);
 		
-		return new ResponseEntity<Boolean>(success, HttpStatus.OK);
-	}
+			    if (retValue) return new ResponseEntity<Boolean>(retValue, HttpStatus.CREATED);
+		
+			    return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+		
+			 }
+			
+			 catch (Exception e) {
+			
+				 return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+				        }
+			}
 
+@RequestMapping(value = "/add_airline", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+public ResponseEntity<Boolean> addAirline(@RequestBody AirlineDTO airlineDTO) {
+	 try {
+			
+	    	boolean retValue = userService.saveAirline(airlineDTO);
+	
+		    if (retValue) return new ResponseEntity<Boolean>(retValue, HttpStatus.CREATED);
+	
+		    return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+	
+		 }
+		
+		 catch (Exception e) {
+		
+			 return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+			        }
+		}
+	
 }

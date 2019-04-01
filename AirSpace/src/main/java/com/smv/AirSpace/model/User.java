@@ -41,7 +41,15 @@ public class User {
         this.userType = userType;
     }
 
-    public Long getId() {
+    public User(String username, String password, UserType userType, UserStatus userStatus) {
+    	this.username = username;
+        this.password = password;
+        this.userStatus = userStatus;
+        this.userType = userType;
+	}
+
+
+	public Long getId() {
         return id;
     }
 

@@ -1,5 +1,20 @@
 package com.smv.AirSpace.repository;
 
-public class AirlineRepository {
+import java.util.List;
+
+import org.springframework.data.repository.Repository;
+
+import com.smv.AirSpace.model.Airline;
+
+
+public interface AirlineRepository extends Repository<Airline, Long>{
+	
+	Airline findByName(String name);
+	
+	List<Airline> findAll();
+
+	Airline save(Airline airline);
+
+	void deleteAll();
 
 }

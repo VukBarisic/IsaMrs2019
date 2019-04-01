@@ -1,6 +1,11 @@
 package com.smv.AirSpace.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table (name = "address")
@@ -11,20 +16,17 @@ public class Address {
 	private Long id;
 	private String street;
 	private String city;
-	private String postCode;
-	private String State;
-
+	private String state;
 
 	public Address(){
 
 	}
 
-	public Address(Long id, String street, String city, String postCode, String state) {
+	public Address(Long id, String street, String city, String state) {
 		this.id = id;
 		this.street = street;
 		this.city = city;
-		this.postCode = postCode;
-		State = state;
+		this.state = state;
 	}
 
 	public Long getId() {
@@ -50,20 +52,11 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-	public String getPostCode() {
-		return postCode;
-	}
-
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-
 	public String getState() {
-		return State;
+		return state;
 	}
 
 	public void setState(String state) {
-		State = state;
+		this.state = state;
 	}
 }

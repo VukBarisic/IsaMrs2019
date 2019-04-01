@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.smv.AirSpace.dto.HotelDTO;
+
 @Entity
 @Table (name = "hotel")
 public class Hotel {
@@ -40,6 +42,16 @@ public class Hotel {
 		this.description = description;
 		this.rating = rating;
 		this.location = location;
+	}
+	
+	public Hotel(HotelDTO hotelDTO) {
+		this.name = hotelDTO.getName();
+		this.stars = hotelDTO.getStars();
+		this.description = hotelDTO.getDescription();
+		this.rating = 0.0;
+		this.location.getAddress().setCity(hotelDTO.getCity());
+		this.location.getAddress().setStreet(hotelDTO.getStreet());
+		this.location.getAddress().setState(hotelDTO.getState());
 	}
 
 	public Long getId() {
