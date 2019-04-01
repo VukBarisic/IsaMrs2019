@@ -1,6 +1,9 @@
 package com.smv.AirSpace.model;
 
+import com.smv.AirSpace.dto.FlightDTO;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +40,17 @@ public class Flight {
 		this.setToAirportId(toAirportId);
 		this.departureDateTime = departureDateTime;
 		this.arrivalDateTime = arrivalDateTime;
+	}
+
+	public Flight(FlightDTO flightDTO){
+		this.flightNumber = flightDTO.getFlightNumber();
+		this.airplaneModel = flightDTO.getAirplaneModel();
+		this.fromAirportId = flightDTO.getFromAirportId();
+		this.toAirportId = flightDTO.getToAirportId();
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		this.departureDateTime = LocalDateTime.parse(flightDTO.getDepartureDateTime(), formatter);
+		this.arrivalDateTime = LocalDateTime.parse(flightDTO.getArrivalDateTime(),formatter);
 	}
 
 
