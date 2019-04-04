@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.smv.AirSpace.dto.AirlineDTO;
 import com.smv.AirSpace.dto.HotelDTO;
+import com.smv.AirSpace.dto.RentacarDTO;
 import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.service.UserService;
 
@@ -76,5 +77,23 @@ public ResponseEntity<Boolean> addAirline(@RequestBody AirlineDTO airlineDTO) {
 			 return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
 			        }
 		}
-	
+
+	@RequestMapping(value = "/add_rentacar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> addRentacar(@RequestBody RentacarDTO rentacarDTOD) {
+		 try {
+				
+		    	boolean retValue = userService.saveRentacar(rentacarDTOD);
+		
+			    if (retValue) return new ResponseEntity<Boolean>(retValue, HttpStatus.CREATED);
+		
+			    return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+		
+			 }
+			
+			 catch (Exception e) {
+			
+				 return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+				        }
+			} 
+		
 }

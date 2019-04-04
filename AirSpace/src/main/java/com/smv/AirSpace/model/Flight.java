@@ -1,7 +1,5 @@
 package com.smv.AirSpace.model;
 
-import com.smv.AirSpace.dto.FlightDTO;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.smv.AirSpace.dto.FlightDTO;
+
 @Entity
 @Table (name = "flight")
 public class Flight {
@@ -20,11 +20,17 @@ public class Flight {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
+	@Column(name = "flightNumber", unique = true, nullable = false)
 	private String flightNumber;
+	@Column(name = "airplaneModel", unique = false, nullable = false)
 	private String airplaneModel;
+	@Column(name = "fromAirportId", unique = false, nullable = false)
 	private String fromAirportId;
+	@Column(name = "toAirportId", unique = false, nullable = false)
 	private String toAirportId;
+	@Column(name = "departureDateTime", unique = false, nullable = false)
 	private LocalDateTime departureDateTime;
+	@Column(name = "arrivalDateTime", unique = false, nullable = false)
 	private LocalDateTime arrivalDateTime;
 
 
@@ -36,8 +42,8 @@ public class Flight {
 		this.id = id;
 		this.flightNumber = flightNumber;
 		this.airplaneModel = airplaneModel;
-		this.setFromAirportId(fromAirportId);
-		this.setToAirportId(toAirportId);
+		this.fromAirportId = fromAirportId;
+		this.toAirportId = toAirportId;
 		this.departureDateTime = departureDateTime;
 		this.arrivalDateTime = arrivalDateTime;
 	}
@@ -47,7 +53,6 @@ public class Flight {
 		this.airplaneModel = flightDTO.getAirplaneModel();
 		this.fromAirportId = flightDTO.getFromAirportId();
 		this.toAirportId = flightDTO.getToAirportId();
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		this.departureDateTime = LocalDateTime.parse(flightDTO.getDepartureDateTime(), formatter);
 		this.arrivalDateTime = LocalDateTime.parse(flightDTO.getArrivalDateTime(),formatter);

@@ -10,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.smv.AirSpace.dto.RentacarDTO;
 
 @Entity
 @Table (name = "rentacar")
@@ -22,6 +25,8 @@ public class Rentacar {
 	private Long id;
 	private String name;
 	private String description;
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private Location location;
 	private double rating;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BranchOffice> branchOffices;
@@ -37,6 +42,24 @@ public class Rentacar {
 		this.description = description;
 		this.rating = 0.0;
 	}
+	
+	public Rentacar(RentacarDTO rentacarDTO) {
+		this.name = rentacarDTO.getName();
+		this.description = rentacarDTO.getDescription();
+		this.rating = 0.0;
+	}
+
+
+	public Location getLocation() {
+		return location;
+	}
+
+
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 
 
 	public Long getId() {

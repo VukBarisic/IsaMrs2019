@@ -1,13 +1,16 @@
 package com.smv.AirSpace.model;
 
-import java.util.HashMap;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,17 +30,19 @@ public class Airline {
     private String description;
     @Column(name = "rating", unique = false, nullable = true)
     private double rating;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
     private Location location;
-    private HashMap<Airport, Airport> flights;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Airport> airports;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Flight> flights;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
     
     public Airline(AirlineDTO airlineDTO) {
     	this.name = airlineDTO.getName();
 		this.description = airlineDTO.getDescription();
 		this.rating = 0.0;
-		this.location.getAddress().setCity(airlineDTO.getCity());
-		this.location.getAddress().setStreet(airlineDTO.getStreet());
-		this.location.getAddress().setState(airlineDTO.getState());
 	}
     
     public Airline() {
