@@ -42,6 +42,24 @@ public class SysAdminContoller {
 			        }
 		}
 	
+	
+	 @RequestMapping(value = "/add_admin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	    public ResponseEntity<Boolean> add(@RequestBody UserDTO userDTO) {
+	        try{
+	        	boolean retValue = userService.saveAdmin(userDTO.getUsername(), userDTO.getEmail(),userDTO.getUserType(), userDTO.getCompanyId());
+	        	if (retValue) return new ResponseEntity<Boolean>(retValue, HttpStatus.CREATED);
+	        	return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+	        }
+	        catch (Exception e) {
+	            return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+	        }
+
+	    }
+
+	
+	
+	
+	
 	@RequestMapping(value = "/add_hotel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> addHotel(@RequestBody HotelDTO hotelDTO) {
 		 try {

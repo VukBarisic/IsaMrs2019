@@ -17,6 +17,7 @@ public interface UserService {
 	public boolean saveAirline(AirlineDTO airlineDTO);
 
 	public boolean saveRentacar(RentacarDTO rentacarDTO);
-	
+
+	public boolean saveAdmin(String username, String email, UserType userType, Long companyId);
 
 }
