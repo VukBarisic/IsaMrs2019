@@ -25,9 +25,11 @@ public class User {
     protected UserStatus userStatus;
 	@Enumerated(EnumType.ORDINAL)
     protected UserType userType;
+	protected Long companyId;
 
 
-    public User(){
+
+	public User(){
 
     }
 
@@ -47,6 +49,16 @@ public class User {
         this.userStatus = userStatus;
         this.userType = userType;
 	}
+
+
+	public User(String username, String password, String email, UserType userType, UserStatus userStatus, Long companyId) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+        this.userStatus = userStatus;
+        this.userType = userType;
+        this.companyId = companyId;
+        }
 
 
 	public Long getId() {
@@ -96,4 +108,15 @@ public class User {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
+    
+
+    public Long getCompanyId() {
+		return companyId;
+	}
+
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
 }

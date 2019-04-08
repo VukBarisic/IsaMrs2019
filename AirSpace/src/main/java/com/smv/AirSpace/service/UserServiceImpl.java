@@ -43,13 +43,32 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			return false;
 		}
-		System.out.println("yes");
 		return true;
 		
 	}
 	
 	@Override
-
+	public boolean saveAdmin(String username, String email, UserType userType, Long companyId) {
+		if (username == null || email == null || userType == null)
+			return false;
+		if (username == "" || email == "")
+			return false;
+		if (existsUsername(username))
+			return false;
+		if (userType == UserType.REGISTERED_USER)
+			return false;
+		if (userType != UserType.SYS_ADMIN && companyId == null) 
+			return false;
+		User user = new User(username,"admin", email, userType, UserStatus.PENDING, companyId);
+		try {
+			userRepository.save(user);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
 	public boolean saveAdmin(String username, UserType userType) {
 
 		if (username == null || userType == null)
