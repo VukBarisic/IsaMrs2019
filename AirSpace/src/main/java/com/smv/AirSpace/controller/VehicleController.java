@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,12 +50,30 @@ public class VehicleController {
 		
 	}
 	
-	@RequestMapping(value="/searchVehicles/{param}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Vehicle>> searchVehicles(@PathVariable String param){
+//	@RequestMapping(value="/searchVehicles/{param}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<List<Vehicle>> deleteVehicle(@PathVariable String param){
+//		try {
+//			System.out.println("brisanje");
+//			return new ResponseEntity<List<Vehicle>>(vehicleService.findByModel(param), HttpStatus.OK);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+	
+	@DeleteMapping(value="/deleteVehicle/{param}")
+	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Integer param){
 		try {
-			System.out.println("pretraga");
+			Long id= new Long(param);
+			System.out.println("---------------------------");
 			System.out.println(param);
-			return new ResponseEntity<List<Vehicle>>(vehicleService.findByModel(param), HttpStatus.OK);
+			System.out.println(id);
+			Vehicle vehicle = vehicleService.findByID(id);
+			if(vehicle == null) {throw new Exception("Vehicle doesn't exist!");	}
+			else {	
+				vehicleService.delete(id);
+				return new ResponseEntity<Void>(HttpStatus.OK);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

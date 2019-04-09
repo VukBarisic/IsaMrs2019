@@ -18,7 +18,8 @@ public class VehicleService {
 
 	
 	public void addVehicle(VehicleDTO vehicleDTO) {
-		Vehicle vehicle = new Vehicle(0L, vehicleDTO.getModel(), vehicleDTO.getGearBox(), vehicleDTO.getNumOfSeats());
+		Vehicle vehicle = new Vehicle(0L, vehicleDTO.getModel(), vehicleDTO.getGearBox(), vehicleDTO.getNumOfSeats()
+				, vehicleDTO.getGodinaProizvodnje()	,vehicleDTO.getIdOffice(), vehicleDTO.getPricePerDay() );
 		
 		vehicleRepository.save(vehicle);
 	}
@@ -32,11 +33,9 @@ public class VehicleService {
 		vehicleRepository.deleteById(id);	
 	}
 	
-	public Vehicle getOne(Long id) {
+	public Vehicle findByID(Long id) {
 		return vehicleRepository.getOne(id);
 	}
-	
-	
 	
 	//NE VALJA
 	public List<Vehicle> findByModel(String param) {
@@ -52,6 +51,7 @@ public class VehicleService {
 		return results;
 		
 	}
+
 
 	
 }

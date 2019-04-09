@@ -1,5 +1,7 @@
 package com.smv.AirSpace.model;
 
+import java.util.Map;
+
 import javax.persistence.*;
 
 
@@ -14,8 +16,14 @@ public class Vehicle {
 	private String model;
 	private String gearBox;
 	private int numOfSeats;
+	private int godinaProizvodnje;
 	private boolean available;
 	private double rating;
+	
+	private Long idUser;
+	private Long idOffice;
+	private String cityLocation;
+	private int pricePerDay;
 	
 	
 	public Vehicle() {
@@ -30,13 +38,16 @@ public class Vehicle {
 		this.rating = rating;
 	}
 	
-	public Vehicle(Long id, String model, String gearBox, int numOfSeats) {
+	public Vehicle(Long id, String model, String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay) {
 		this.id = id;
 		this.model = model;
 		this.gearBox = gearBox;
 		this.numOfSeats = numOfSeats;
+		this.godinaProizvodnje = godinaProizvodnje;
 		this.available = true;
 		this.rating = 100.0;
+		this.idOffice = idOffice;
+		this.pricePerDay = pricePerDay;
 	}
 
 	public Long getId() {
@@ -85,6 +96,46 @@ public class Vehicle {
 
 	public void setGearBox(String gearBox) {
 		this.gearBox = gearBox;
+	}
+
+	public int getGodinaProizvodnje() {
+		return godinaProizvodnje;
+	}
+
+	public void setGodinaProizvodnje(int godinaProizvodnje) {
+		this.godinaProizvodnje = godinaProizvodnje;
+	}
+
+	public Long getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+
+	public Long getIdOffice() {
+		return idOffice;
+	}
+
+	public void setIdOffice(Long idOffice) {
+		this.idOffice = idOffice;
+	}
+
+	public String getCityLocation() {
+		return cityLocation;
+	}
+
+	public void setCityLocation(String cityLocation) {
+		this.cityLocation = cityLocation;
+	}
+
+	public int getPricePerDay() {
+		return pricePerDay;
+	}
+
+	public void setPricePerDay(int pricePerDay) {
+		this.pricePerDay = pricePerDay;
 	}
 	
 	
