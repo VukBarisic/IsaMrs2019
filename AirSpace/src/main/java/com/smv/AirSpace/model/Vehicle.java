@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import com.smv.AirSpace.dto.VehicleDTO;
+
 
 @Entity
 @Table (name = "vehicle")
@@ -49,6 +51,17 @@ public class Vehicle {
 		this.idOffice = idOffice;
 		this.pricePerDay = pricePerDay;
 	}
+	
+	public Vehicle(VehicleDTO dto) {
+		this.id = dto.getId();
+		this.model = dto.getModel();
+		this.gearBox = dto.getGearBox();
+		this.numOfSeats = dto.getNumOfSeats();
+		this.godinaProizvodnje = dto.getGodinaProizvodnje();
+		this.idOffice = dto.getIdOffice();
+		this.pricePerDay = dto.getPricePerDay();
+	}
+
 
 	public Long getId() {
 		return id;

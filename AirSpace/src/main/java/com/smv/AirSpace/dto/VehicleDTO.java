@@ -6,7 +6,7 @@ public class VehicleDTO {
 	private int numOfSeats;
 	private String gearBox;
 	private int godinaProizvodnje;
-	
+	private long id;
 	private Long idOffice;
 	private int pricePerDay;
 	
@@ -24,7 +24,25 @@ public class VehicleDTO {
 		this.pricePerDay = pricePerDay;
 		
 	}
+	public VehicleDTO(long id, String model,String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay) {
+
+		this.model = model;
+		this.gearBox = gearBox;
+		this.numOfSeats = numOfSeats;
+		this.godinaProizvodnje = godinaProizvodnje;
+		this.idOffice = idOffice;
+		this.pricePerDay = pricePerDay;
+		this.id = id;
+		
+	}
 	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getGearBox() {
 		return gearBox;
 	}
