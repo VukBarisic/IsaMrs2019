@@ -7,7 +7,7 @@ public class UserDTO {
 	protected String username;
     protected String email;
     protected UserType userType;
-    private Long companyId;
+    private String companyName;
     
     
 	public String getUsername() {
@@ -28,11 +28,11 @@ public class UserDTO {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-	public Long getCompanyId() {
-		return companyId;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
     
     

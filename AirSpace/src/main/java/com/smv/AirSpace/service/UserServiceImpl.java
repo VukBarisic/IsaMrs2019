@@ -67,46 +67,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return true;
 	}
-	
-	@Override
-	public boolean saveAdmin(String username, UserType userType) {
 
-		if (username == null || userType == null)
-
-			return false;
-
-		if (username == "")
-
-			return false;
-
-
-
-		if (existsUsername(username))
-
-			return false;
-
-		if (userType == UserType.REGISTERED_USER)
-
-			return false;
-		
-		
-		User user = new User(username,"admin", userType, UserStatus.PENDING);
-
-		try {
-
-			userRepository.save(user);
-
-		} catch (Exception e) {
-
-			return false;
-
-		}
-
-
-
-		return true;
-
-	}
 	
 	public boolean existsUsername(String username) {
 
@@ -186,6 +147,23 @@ public class UserServiceImpl implements UserService {
 		rentacar.setLocation(location);
 		rentacarRepository.save(rentacar);
 		return true;
+	}
+
+	@Override
+	public Long findCompanydId(String name, UserType userType) {
+		if (userType  == UserType.AIRLINE_ADMIN) {
+			Airline airline = airlineRepository.findByName(name);
+			if (airline != null) return airline.getId();
+		}
+		if (userType  == UserType.HOTEL_ADMIN) {
+			Hotel hotel = hotelRepository.findByName(name);
+			if (hotel != null) return hotel.getId();
+		}
+		if (userType  == UserType.RENTACAR_ADMIN) {
+			Rentacar rentacar = rentacarRepository.findByName(name);
+			if (rentacar != null) return rentacar.getId();
+		}
+		return null;
 	}
 	
 	

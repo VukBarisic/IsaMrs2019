@@ -1,12 +1,26 @@
 package com.smv.AirSpace.dto;
 
-public class AirlineDTO {
+import com.smv.AirSpace.model.Airline;
+
+public class AirlineFrontDTO {
 	
 	private String name;
     private String description;
     private String street;
 	private String city;
 	private String state;
+	private double rating;
+	
+	public AirlineFrontDTO(Airline airline) {
+		this.name =  airline.getName();
+		this.description = airline.getDescription();
+		this.street = airline.getLocation().getAddress().getStreet();
+		this.city = airline.getLocation().getAddress().getCity();
+		this.state = airline.getLocation().getAddress().getState();
+		this.rating = airline.getRating();
+		
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -37,6 +51,12 @@ public class AirlineDTO {
 	public void setState(String state) {
 		this.state = state;
 	}
-
+	public double getRating() {
+		return rating;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 	
+
 }
