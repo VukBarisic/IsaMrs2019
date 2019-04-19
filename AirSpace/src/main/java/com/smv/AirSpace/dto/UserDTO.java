@@ -4,12 +4,35 @@ import com.smv.AirSpace.model.UserType;
 
 public class UserDTO {
 	
+	protected String firstName;
+	protected String lastName;
+	protected String password;
 	protected String username;
     protected String email;
+    protected String city;
+    protected String number;
     protected UserType userType;
     private String companyName;
     
     
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -21,6 +44,18 @@ public class UserDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	public UserType getUserType() {
 		return userType;
@@ -34,6 +69,9 @@ public class UserDTO {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
+    
+    
+	
     
     
 

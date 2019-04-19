@@ -3,11 +3,13 @@ package com.smv.AirSpace.service;
 import com.smv.AirSpace.dto.AirlineDTO;
 import com.smv.AirSpace.dto.HotelDTO;
 import com.smv.AirSpace.dto.RentacarDTO;
+import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.model.UserType;
 
 
 public interface UserService {
+	public User saveUser(UserDTO userDTO);
 	
 	public boolean saveAdmin(User user);
 		

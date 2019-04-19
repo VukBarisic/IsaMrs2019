@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.smv.AirSpace.dto.UserDTO;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -18,9 +20,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     protected Long id;
-    protected String username;
+	protected String firstName;
+	protected String lastName;
+	protected String username;
+	protected String email;
     protected String password;
-    protected String email;
+    protected String city;
+    protected String phoneNumber;
 	@Enumerated(EnumType.ORDINAL)
     protected UserStatus userStatus;
 	@Enumerated(EnumType.ORDINAL)
@@ -49,6 +55,23 @@ public class User {
         this.userStatus = userStatus;
         this.userType = userType;
 	}
+    
+
+	public User(Long id, String firstName, String lastName, String username, String email, String password, String city,
+			String phoneNumber, UserStatus userStatus, UserType userType, Long companyId) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.city = city;
+		this.phoneNumber = phoneNumber;
+		this.userStatus = userStatus;
+		this.userType = userType;
+		this.companyId = companyId;
+	}
 
 
 	public User(String username, String password, String email, UserType userType, UserStatus userStatus, Long companyId) {
@@ -61,56 +84,118 @@ public class User {
         }
 
 
+	public User(UserDTO dto) {
+		this.firstName = dto.getFirstName();
+		this.lastName = dto.getLastName();
+		this.username = dto.getUsername();
+		this.email = dto.getEmail();
+		this.password = dto.getPassword();
+		this.city = dto.getCity();
+		this.phoneNumber = dto.getNumber();
+	}
+
+
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getUsername() {
-        return username;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
-    public String getPassword() {
-        return password;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    public String getEmail() {
-        return email;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public UserStatus getUserStatus() {
-        return userStatus;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
-    }
 
-    public UserType getUserType() {
-        return userType;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
-    
 
-    public Long getCompanyId() {
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
+	public UserStatus getUserStatus() {
+		return userStatus;
+	}
+
+
+	public void setUserStatus(UserStatus userStatus) {
+		this.userStatus = userStatus;
+	}
+
+
+	public UserType getUserType() {
+		return userType;
+	}
+
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+
+
+	public Long getCompanyId() {
 		return companyId;
 	}
 
@@ -118,5 +203,9 @@ public class User {
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
+
+
+	
+
 
 }
