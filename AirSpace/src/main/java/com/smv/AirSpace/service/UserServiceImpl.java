@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
 	// private PasswordEncoder passwordEncoder;
 
 	public User saveUser(UserDTO userDTO) {
+		System.out.println("aaaaaaaaaa");
 		User user = new User(userDTO);
 		userRepository.save(user);
 		return user;
