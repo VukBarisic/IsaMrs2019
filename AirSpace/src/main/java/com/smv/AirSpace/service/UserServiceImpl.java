@@ -1,12 +1,9 @@
 package com.smv.AirSpace.service;
 
+import com.smv.AirSpace.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smv.AirSpace.dto.AirlineDTO;
-import com.smv.AirSpace.dto.HotelDTO;
-import com.smv.AirSpace.dto.RentacarDTO;
-import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.model.Address;
 import com.smv.AirSpace.model.Airline;
 import com.smv.AirSpace.model.Hotel;
@@ -178,6 +175,55 @@ public class UserServiceImpl implements UserService {
 				return rentacar.getId();
 		}
 		return null;
+	}
+
+	public boolean update(RegisterUserEditDTO registerUserEditDTO){
+		User user = userRepository.findById(Long.parseLong(registerUserEditDTO.getId()));
+		boolean updated = false;
+
+		if(user == null || user.getUserStatus().equals(UserStatus.DEACTIVATED) || !user.getUserType().equals(UserType.REGISTERED_USER)){
+			return false;
+		}
+
+		if(registerUserEditDTO.getName() != null){
+			user.setFirstName(registerUserEditDTO.getName());
+			updated = true;
+		}
+
+		if(registerUserEditDTO.getSurname() != null){
+			user.setLastName(registerUserEditDTO.getSurname());
+			updated = true;
+		}
+
+		if(registerUserEditDTO.getEmail() != null){
+			user.setEmail(registerUserEditDTO.getEmail());
+			updated = true;
+		}
+
+		if(registerUserEditDTO.getPassword() != null){
+			user.setPassword(registerUserEditDTO.getPassword());
+			updated = true;
+		}
+
+		if(registerUserEditDTO.getCity() != null){
+			user.setCity(registerUserEditDTO.getCity());
+			updated = true;
+		}
+
+		if(registerUserEditDTO.getNumber() != null){
+			user.setPhoneNumber(registerUserEditDTO.getNumber());
+			updated = true;
+		}
+
+		try {
+			userRepository.save(user);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+
+		return updated;
+
 	}
 
 }

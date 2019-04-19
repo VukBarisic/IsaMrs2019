@@ -1,12 +1,10 @@
 package com.smv.AirSpace.controller;
 
+import com.smv.AirSpace.dto.RegisterUserEditDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.model.User;
@@ -26,6 +24,19 @@ public class UserController {
 		User user = userService.saveUser(userDTO);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
+
+	@RequestMapping(value = "/updateRegisterUser", method = RequestMethod.PUT)
+	public ResponseEntity updateRegUser(@RequestBody RegisterUserEditDTO registerUserEditDTO) {
+		boolean updated = userService.update(registerUserEditDTO);
+
+		if(updated){
+			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+		}
+		return new ResponseEntity<Boolean>(false,HttpStatus.OK);
+	}
+
+
+
 /*
 	// Get all vehicles
 	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)

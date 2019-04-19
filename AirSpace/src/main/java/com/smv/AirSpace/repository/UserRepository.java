@@ -13,6 +13,8 @@ public interface UserRepository extends Repository<User, Long> {
 	
 	User findByUsername(String username);
 
+	User findById(Long id);
+
 	User findByUsernameAndPassword(String username, String password);
 
 	List<User> findByUserTypeAndUserStatus(UserType userType, UserStatus userStatus);
