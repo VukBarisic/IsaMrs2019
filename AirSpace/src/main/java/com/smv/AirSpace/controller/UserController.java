@@ -1,8 +1,11 @@
 package com.smv.AirSpace.controller;
 
 import com.smv.AirSpace.dto.RegisterUserEditDTO;
+import com.smv.AirSpace.service.UserServiceImpl;
+import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +18,7 @@ import com.smv.AirSpace.service.UserService;
 public class UserController {
 	
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 	
 	// Create new user.
 	@PostMapping( consumes = "application/json")
@@ -25,10 +28,10 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/updateRegisterUser", method = RequestMethod.PUT)
+	@RequestMapping(value = "/updateRegisterUser", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity updateRegUser(@RequestBody RegisterUserEditDTO registerUserEditDTO) {
+		System.out.println("editovanje korisnika");
 		boolean updated = userService.update(registerUserEditDTO);
-
 		if(updated){
 			return new ResponseEntity<Boolean>(true,HttpStatus.OK);
 		}

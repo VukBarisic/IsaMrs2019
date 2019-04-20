@@ -180,8 +180,17 @@ public class UserServiceImpl implements UserService {
 	public boolean update(RegisterUserEditDTO registerUserEditDTO){
 		User user = userRepository.findById(Long.parseLong(registerUserEditDTO.getId()));
 		boolean updated = false;
+		System.out.println("editovanje korisnika servis");
 
-		if(user == null || user.getUserStatus().equals(UserStatus.DEACTIVATED) || !user.getUserType().equals(UserType.REGISTERED_USER)){
+		if(user == null){
+			return false;
+		}
+
+		if(user.getUserStatus()!= null && user.getUserStatus().equals(UserStatus.DEACTIVATED)){
+			return false;
+		}
+
+		if(user.getUserType() != null && !user.getUserType().equals(UserType.REGISTERED_USER)){
 			return false;
 		}
 
