@@ -21,5 +21,7 @@ public interface UserService {
 	public Long findCompanydId(String name, UserType userType);
 
 	public boolean update(RegisterUserEditDTO registerUserEditDTO);
+	
+	public User findByuuid(String uuid); 
 
 }

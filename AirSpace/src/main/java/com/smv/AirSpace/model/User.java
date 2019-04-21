@@ -1,5 +1,7 @@
 package com.smv.AirSpace.model;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -32,7 +34,19 @@ public class User {
 	@Enumerated(EnumType.ORDINAL)
     protected UserType userType;
 	protected Long companyId;
+	
+	protected String uuid;
 
+
+
+	public String getUuid() {
+		return uuid;
+	}
+
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
 
 	public User(){
@@ -92,6 +106,7 @@ public class User {
 		this.password = dto.getPassword();
 		this.city = dto.getCity();
 		this.phoneNumber = dto.getNumber();
+		this.uuid = UUID.randomUUID().toString();
 	}
 
 

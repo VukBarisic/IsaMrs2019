@@ -1,8 +1,11 @@
 package com.smv.AirSpace.controller;
 
 import com.smv.AirSpace.dto.RegisterUserEditDTO;
+import com.smv.AirSpace.service.EMailService;
 import com.smv.AirSpace.service.UserServiceImpl;
-import javafx.application.Application;
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.model.User;
-import com.smv.AirSpace.service.UserService;
+import com.smv.AirSpace.model.UserStatus;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -20,11 +23,14 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 	
+
+	
 	// Create new user.
 	@PostMapping( consumes = "application/json")
 	public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
-		System.out.println("usao u controler");
 		User user = userService.saveUser(userDTO);
+		
+		
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
@@ -40,34 +46,20 @@ public class UserController {
 
 
 
-/*
-	// Get all vehicles
-	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getVehicles() {
-		try {
-			return new ResponseEntity<List<Vehicle>>(vehicleService.getAllVehicles(), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+	@GetMapping(value = "/activate/{uuid}")
+	public String activateUser(@PathVariable("uuid") String uuid) {
+		User user = userService.findByuuid(uuid);
+		if (user != null) {
+			if (user.getUserStatus() == UserStatus.PENDING) {
+				user.setUserStatus(UserStatus.ACTIVATED);
+				userService.saveUser(user);
+				return String.format("<p>Succesfully activated! <p> <p>%s welcome to site!<p>", user.getUsername());
+			} else {
+				return "User allready activated!";
+			}
 		}
-
+		return "Bad activation link!";
 	}
-	
-	@GetMapping(value = "/{param}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getVehicle(@PathVariable("param") Long id) {
-		return new ResponseEntity<Vehicle>(vehicleService.findByID(id), HttpStatus.OK);
-	}
-
-	@PutMapping()
-	public ResponseEntity<Vehicle> updateVehicle(@RequestBody VehicleDTO vehicle ) {
-		
-		return new ResponseEntity<Vehicle>(vehicleService.update(vehicle), HttpStatus.OK);
-	}
-	
-	@DeleteMapping(value = "/{param}")
-	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Long id) {
-		vehicleService.delete(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-*/	
 
 }

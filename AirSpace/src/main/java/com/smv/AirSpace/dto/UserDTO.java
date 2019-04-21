@@ -1,5 +1,6 @@
 package com.smv.AirSpace.dto;
 
+import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.model.UserType;
 
 public class UserDTO {
@@ -12,7 +13,32 @@ public class UserDTO {
     protected String city;
     protected String number;
     protected UserType userType;
-    private String companyName;
+    protected String JWTToken;
+    
+    
+    
+    public UserDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserDTO(User user) {
+    	setFirstName(user.getFirstName());
+    	setLastName(user.getLastName());
+    	setUsername(user.getUsername());
+    	setEmail(user.getEmail());
+    	setCity(user.getCity());
+    	setNumber(user.getPhoneNumber());
+    	setUserType(user.getUserType());
+    }
+    
+    public String getJWTToken() {
+		return JWTToken;
+	}
+	public void setJWTToken(String jWTToken) {
+		JWTToken = jWTToken;
+	}
+	private String companyName;
     
     
 	public String getFirstName() {

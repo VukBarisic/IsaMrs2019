@@ -8,6 +8,8 @@ import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.model.UserStatus;
 import com.smv.AirSpace.model.UserType;
 
+
+
 public interface UserRepository extends Repository<User, Long> {
 
 	
@@ -26,6 +28,8 @@ public interface UserRepository extends Repository<User, Long> {
 	User save(User user);
 
 	void deleteAll(); 
+	
+	User findByuuid(String uuid);
 	
 	
 }

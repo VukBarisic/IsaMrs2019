@@ -1,9 +1,16 @@
 package com.smv.AirSpace.service;
 
-import com.smv.AirSpace.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.smv.AirSpace.dto.AirlineDTO;
+import com.smv.AirSpace.dto.HotelDTO;
+import com.smv.AirSpace.dto.RegisterUserEditDTO;
+import com.smv.AirSpace.dto.RentacarDTO;
+import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.model.Address;
 import com.smv.AirSpace.model.Airline;
 import com.smv.AirSpace.model.Hotel;
@@ -12,13 +19,10 @@ import com.smv.AirSpace.model.Rentacar;
 import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.model.UserStatus;
 import com.smv.AirSpace.model.UserType;
-import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.AirlineRepository;
 import com.smv.AirSpace.repository.HotelRepository;
 import com.smv.AirSpace.repository.RentacarRepository;
 import com.smv.AirSpace.repository.UserRepository;
-
-import exceptions.VehicleAlreadyExistsException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -35,12 +39,32 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RentacarRepository rentacarRepository;
 
-	// @Autowired
-	// private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Override
+	public User findByuuid(String uuid) {
+		return userRepository.findByuuid(uuid);
+	}
 
+	@Autowired
+	EMailService emailService;
+	
+	
 	public User saveUser(UserDTO userDTO) {
-		System.out.println("aaaaaaaaaa");
 		User user = new User(userDTO);
+		user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		user.setUserType(UserType.REGISTERED_USER);
+		user.setUserStatus(UserStatus.PENDING);
+		emailService.sendMail(user, "Activation link",
+				"Please follow link below to activate \nhttp://localhost:8080/api/user/activate/"
+						+ user.getUuid());
+		
+		userRepository.save(user);
+		return user;
+	}
+	
+	public User saveUser(User user) {
 		userRepository.save(user);
 		return user;
 	}
@@ -233,6 +257,27 @@ public class UserServiceImpl implements UserService {
 
 		return updated;
 
+	}
+
+
+	public User getUserByUsername(String username) {
+		User user = userRepository.findByUsername(username);
+		if(user == null) {
+			throw new ResourceNotFoundException();
+		}
+		return user;
+	}
+	
+	public User getLoggedUser(){
+		try {
+			return getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		} catch (Exception e) {
+			if(e instanceof NullPointerException ) {
+				return null;
+			} 
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 }
