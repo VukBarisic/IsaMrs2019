@@ -38,7 +38,7 @@ public class VehicleController {
 	}
 
 	// Get all vehicles
-	@PreAuthorize("hasAuthority('USER')")
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getVehicles() {
 		try {
