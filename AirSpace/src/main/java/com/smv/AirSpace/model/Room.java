@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.smv.AirSpace.dto.RoomDTO;
+
 @Entity
 @Table (name = "room")
 public class Room {
@@ -43,6 +45,14 @@ public class Room {
 		this.available = available;
 	}
 	
+	public Room(RoomDTO roomDTO) {
+		this.id = roomDTO.getId();
+		this.number = roomDTO.getNumber();
+		this.floor = roomDTO.getFloor();
+		this.roomType = roomDTO.getRoomType();
+		this.numOfBeds = roomDTO.getNumOfBeds();
+	}
+
 	public Long getId() {
 		return id;
 	}

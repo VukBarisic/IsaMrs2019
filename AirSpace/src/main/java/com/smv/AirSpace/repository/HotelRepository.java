@@ -17,7 +17,8 @@ public interface HotelRepository extends Repository<Hotel, Long> {
 	
 	@Query("select name from Hotel")
 	List<String> getAllNames();
-
+	
+	Hotel findById(long id);
 
 	void deleteAll();
 

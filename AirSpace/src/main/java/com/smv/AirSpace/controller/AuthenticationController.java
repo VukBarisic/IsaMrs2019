@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.smv.AirSpace.dto.LoginDTO;
 import com.smv.AirSpace.dto.UserDTO;
 import com.smv.AirSpace.security.TokenUtils;
@@ -34,7 +33,7 @@ public class AuthenticationController {
 	
 	@Autowired
 	UserServiceImpl userService;
-	
+		
 	
 	@PostMapping()
 	public ResponseEntity<?> login(@RequestBody()LoginDTO loginDTO){

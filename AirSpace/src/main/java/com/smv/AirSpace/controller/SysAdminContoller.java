@@ -66,13 +66,15 @@ public class SysAdminContoller {
 		List<Airline> airlines = new ArrayList<Airline>();
 		try {
 			airlines = airlineService.getAll();
-			if (null != null)
+			if (airlines != null)
 				return new ResponseEntity<List<AirlineFrontDTO>>(Helpers.Converter.convertAirlineToAirlineFrontDTOs(airlines), HttpStatus.OK);
 			return new ResponseEntity<List<AirlineFrontDTO>>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<List<AirlineFrontDTO>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
 	
 	
 	@RequestMapping(value = "/get_rentacars", method = RequestMethod.GET)
