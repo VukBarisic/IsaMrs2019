@@ -29,14 +29,17 @@ public class VehicleController {
 	@Autowired
 	VehicleService vehicleService;
 
+	
+
 	// Create new vehicle.
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@PostMapping( consumes = "application/json")
 	public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
 
 		Vehicle vehicle = vehicleService.saveVehicle(vehicleDTO);
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.CREATED);
 	}
-
+	
 	// Get all vehicles
 	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,10 +52,22 @@ public class VehicleController {
 
 	}
 	
+	@RequestMapping(value="/getVehicleByModel/{searchParam}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getVehicleByModel(@PathVariable String searchParam) {
+		return new ResponseEntity<List<Vehicle>>(vehicleService.findByModel(searchParam), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getVehicleByGearBox/{searchParam}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getVehicleByGearBox(@PathVariable String searchParam) {
+		return new ResponseEntity<List<Vehicle>>(vehicleService.findByGearBox(searchParam), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/{param}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getVehicle(@PathVariable("param") Long id) {
 		return new ResponseEntity<Vehicle>(vehicleService.findByID(id), HttpStatus.OK);
 	}
+	
+
 
 	@PutMapping()
 	public ResponseEntity<Vehicle> updateVehicle(@RequestBody VehicleDTO vehicle ) {
@@ -65,6 +80,8 @@ public class VehicleController {
 		vehicleService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+
 	
 
 }

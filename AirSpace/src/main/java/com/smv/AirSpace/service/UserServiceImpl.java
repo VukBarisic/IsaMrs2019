@@ -95,6 +95,9 @@ public class UserServiceImpl implements UserService {
 		User user = new User(username, "admin", email, userType, UserStatus.PENDING, companyId);
 		try {
 			userRepository.save(user);
+			emailService.sendMail(user, "Activation link",
+					"Please follow link below to activate \nhttp://localhost:8080/api/user/activate/"
+							+ user.getUuid());
 		} catch (Exception e) {
 			return false;
 		}

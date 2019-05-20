@@ -37,6 +37,7 @@ public class AuthenticationController {
 	
 	@PostMapping()
 	public ResponseEntity<?> login(@RequestBody()LoginDTO loginDTO){
+		
 		try {
         	// Perform the authentication
         	UsernamePasswordAuthenticationToken token = 

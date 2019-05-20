@@ -24,10 +24,13 @@ public class VehicleService {
 	public Vehicle saveVehicle(VehicleDTO vehicleDTO)
 	{
 		Vehicle vehicle = new Vehicle(vehicleDTO);
+		/*
 		if(vehicleRepository.findById(vehicle.getId())!=null){
+			vehicleRepository.save(vehicle);
 			throw new VehicleAlreadyExistsException();
 			
 		}
+		*/
 		vehicleRepository.save(vehicle);
 		return vehicle;
 	}
@@ -44,6 +47,30 @@ public class VehicleService {
 			throw new VehicleDoesntExistException();
 		}
 		
+	}
+	
+	public List<Vehicle> findByGearBox(String searchParam) {
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		List<Vehicle> rets = new ArrayList<Vehicle>();
+		vehicles = vehicleRepository.findAll();
+		for (Vehicle vehicle : vehicles) {
+			if(vehicle.getGearBox().toLowerCase().contains(searchParam.toLowerCase())){
+				rets.add(vehicle);
+			}
+		}
+		return rets;
+	}
+	
+	public List<Vehicle> findByModel(String searchParam) {
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		List<Vehicle> rets = new ArrayList<Vehicle>();
+		vehicles = vehicleRepository.findAll();
+		for (Vehicle vehicle : vehicles) {
+			if(vehicle.getModel().toLowerCase().contains(searchParam.toLowerCase())){
+				rets.add(vehicle);
+			}
+		}
+		return rets;
 	}
 	
 	public Vehicle findByID(Long id) {

@@ -95,6 +95,8 @@ public class User {
         this.userStatus = userStatus;
         this.userType = userType;
         this.companyId = companyId;
+        //DODATO ZBOG EMAIL AKTIVACIJE ADMINA
+        this.uuid = UUID.randomUUID().toString();
         }
 
 
