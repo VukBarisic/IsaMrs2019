@@ -11,7 +11,6 @@ import com.smv.AirSpace.dto.VehicleDTO;
 import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.VehicleRepository;
 
-import exceptions.VehicleAlreadyExistsException;
 import exceptions.VehicleDoesntExistException;
 
 @Service
