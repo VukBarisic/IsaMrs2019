@@ -67,8 +67,6 @@ public class VehicleController {
 		return new ResponseEntity<Vehicle>(vehicleService.findByID(id), HttpStatus.OK);
 	}
 	
-
-
 	@PutMapping()
 	public ResponseEntity<Vehicle> updateVehicle(@RequestBody VehicleDTO vehicle ) {
 		

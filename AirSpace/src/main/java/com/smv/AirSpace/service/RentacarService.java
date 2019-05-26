@@ -6,7 +6,7 @@ import com.smv.AirSpace.model.Rentacar;
 
 public interface RentacarService {
 
-	public void saveRentacar();
+	public void saveRentacar(Rentacar rentaCar);
 	public List<Rentacar> getAll();
 	public List<String> getAllNames();
 	

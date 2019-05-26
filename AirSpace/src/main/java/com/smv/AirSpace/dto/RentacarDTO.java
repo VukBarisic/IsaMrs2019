@@ -1,5 +1,7 @@
 package com.smv.AirSpace.dto;
 
+import com.smv.AirSpace.model.Rentacar;
+
 public class RentacarDTO {
 	
 	private String name;
@@ -7,7 +9,19 @@ public class RentacarDTO {
 	private String street;
 	private String city;
 	private String state;
+	private Long id;
 	
+	public RentacarDTO() {
+		
+	}
+	public RentacarDTO(Rentacar rentacar) {
+		this.name = rentacar.getName();
+		this.description = rentacar.getDescription();
+		this.street = rentacar.getLocation().getAddress().getStreet();
+		this.city = rentacar.getLocation().getAddress().getCity();
+		this.state = rentacar.getLocation().getAddress().getState();
+		this.id = rentacar.getLocation().getAddress().getId();
+	}
 	
 	public String getName() {
 		return name;
@@ -38,6 +52,14 @@ public class RentacarDTO {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

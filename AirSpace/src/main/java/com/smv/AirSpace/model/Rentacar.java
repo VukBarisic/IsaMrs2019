@@ -44,6 +44,7 @@ public class Rentacar {
 	}
 	
 	public Rentacar(RentacarDTO rentacarDTO) {
+		this.id =rentacarDTO.getId();
 		this.name = rentacarDTO.getName();
 		this.description = rentacarDTO.getDescription();
 		this.rating = 0.0;
