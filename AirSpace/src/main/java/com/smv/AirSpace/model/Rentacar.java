@@ -28,7 +28,7 @@ public class Rentacar {
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Location location;
 	private double rating;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "rentacar")
     private List<BranchOffice> branchOffices;
 	public Rentacar(){
 

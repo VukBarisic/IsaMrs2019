@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,6 +27,8 @@ public class BranchOffice {
 	private Location location;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Vehicle> vehicles;
+    @ManyToOne()
+    private Rentacar rentacar;
 
 	public BranchOffice(){
 

@@ -32,14 +32,14 @@ public class BranchOfficeController {
 	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@GetMapping("/admin")
 	public List<BranchOffice> getBranchOffices(Principal principal) {
-		System.out.println("USAO U GETBRANCHOFFICE");
+		//System.out.println("USAO U GETBRANCHOFFICE");
 		List<BranchOffice> branchOffices = new ArrayList<BranchOffice>();
 		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
 		branchOffices = rentaCar.getBranchOffices();
 		return branchOffices;
 
 	}
-
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@DeleteMapping(value = "/{param}")
 	public ResponseEntity<Void> deleteOffice(@PathVariable("param") Long id) {
 		branchOfficeService.delete(id);

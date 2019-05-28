@@ -14,7 +14,7 @@ public class BranchOfficeService {
 	BranchOfficeRepository branchOfficeRepository;
 	
 	public void delete(Long id) {
-		System.out.println("Ovo je id" + id);
+		//System.out.println("Ovo je id" + id);
 		try {
 			branchOfficeRepository.deleteById(id);
 		} catch (Exception e) {
