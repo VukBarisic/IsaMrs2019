@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "branchoffce")
+@Table (name = "branchoffice")
 public class BranchOffice {
 
 	@Id
@@ -25,7 +25,7 @@ public class BranchOffice {
 	private String officeName;
     @OneToOne(fetch = FetchType.EAGER)
 	private Location location;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="branchoffice")
 	private List<Vehicle> vehicles;
     @ManyToOne()
     private Rentacar rentacar;

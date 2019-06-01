@@ -1,8 +1,12 @@
 package com.smv.AirSpace.model;
 
-import java.util.Map;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.smv.AirSpace.dto.VehicleDTO;
 
@@ -26,6 +30,9 @@ public class Vehicle {
 	private Long idOffice;
 	private String cityLocation;
 	private int pricePerDay;
+	
+	@ManyToOne()
+	private BranchOffice branchoffice;
 	
 	
 	public Vehicle() {
