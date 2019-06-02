@@ -1,5 +1,6 @@
 package com.smv.AirSpace.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smv.AirSpace.dto.VehicleDTO;
+import com.smv.AirSpace.model.BranchOffice;
+import com.smv.AirSpace.model.Rentacar;
 import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.VehicleRepository;
 
@@ -18,6 +21,9 @@ public class VehicleService {
 	
 	@Autowired
     VehicleRepository vehicleRepository;
+	
+	@Autowired
+	RentacarServiceImpl rentaCarService;
 
 	
 	public Vehicle saveVehicle(VehicleDTO vehicleDTO)

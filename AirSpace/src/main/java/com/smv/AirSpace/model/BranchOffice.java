@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.smv.AirSpace.dto.BranchOfficeDTO;
+
 @Entity
 @Table (name = "branchoffice")
 public class BranchOffice {
@@ -23,6 +25,7 @@ public class BranchOffice {
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 	private String officeName;
+	private String address;
     @OneToOne(fetch = FetchType.EAGER)
 	private Location location;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="branchoffice")
@@ -41,6 +44,15 @@ public class BranchOffice {
 		this.location = location;
 		this.vehicles = vehicles;
 	}
+
+	public BranchOffice(BranchOfficeDTO officeDTO) {
+		this.id=officeDTO.getId();
+		this.officeName = officeDTO.getOfficeName();
+		this.address = officeDTO.getAddress();
+		this.rentacar = officeDTO.getRentacar();
+
+	}
+
 
 	public Long getId() {
 		return id;

@@ -34,6 +34,9 @@ public class Vehicle {
 	@ManyToOne()
 	private BranchOffice branchoffice;
 	
+	@ManyToOne()
+	private Rentacar rentacar;
+	
 	
 	public Vehicle() {
 	}
@@ -67,6 +70,8 @@ public class Vehicle {
 		this.godinaProizvodnje = dto.getGodinaProizvodnje();
 		this.idOffice = dto.getIdOffice();
 		this.pricePerDay = dto.getPricePerDay();
+		this.rentacar = dto.getRentacar();
+		this.branchoffice = dto.getBranchOffice();
 	}
 
 

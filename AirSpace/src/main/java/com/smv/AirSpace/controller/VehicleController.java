@@ -1,5 +1,7 @@
 package com.smv.AirSpace.controller;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.smv.AirSpace.dto.VehicleDTO;
+import com.smv.AirSpace.model.BranchOffice;
+import com.smv.AirSpace.model.Rentacar;
 import com.smv.AirSpace.model.Vehicle;
+import com.smv.AirSpace.service.RentacarServiceImpl;
 import com.smv.AirSpace.service.VehicleService;
 
 
@@ -29,23 +34,46 @@ public class VehicleController {
 	@Autowired
 	VehicleService vehicleService;
 
-	
+	@Autowired
+	RentacarServiceImpl rentaCarService;
 
 	// Create new vehicle.
 	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@PostMapping( consumes = "application/json")
-	public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
-
-		Vehicle vehicle = vehicleService.saveVehicle(vehicleDTO);
+	public ResponseEntity<Vehicle> addVehicle(@RequestBody VehicleDTO vehicleDTO, Principal principal) {		
+		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
+		//List<BranchOffice>offices = rentaCar.getBranchOffices();
+		for (BranchOffice office : rentaCar.getBranchOffices()) {
+			if(office.getId().intValue()==vehicleDTO.getIdOffice().intValue()) {
+				vehicleDTO.setBranchOffice(office);
+			}
+		}		
+		vehicleDTO.setRentacar(rentaCar);
+		Vehicle vehicle = vehicleService.saveVehicle(vehicleDTO);		
+		rentaCar.getVehicles().add(vehicle);
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.CREATED);
 	}
-	
+	/*
+	 * TREBA URADITI ZA OBICNOG KORISNIKA!!!
 	// Get all vehicles
 	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getVehicles() {
 		try {
 			return new ResponseEntity<List<Vehicle>>(vehicleService.getAllVehicles(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
+	*/
+	// Get all vehicles
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
+	@GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getVehicles(Principal principal) {
+		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
+		try {
+			return new ResponseEntity<List<Vehicle>>(rentaCar.getVehicles(), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -68,8 +96,14 @@ public class VehicleController {
 	}
 	
 	@PutMapping()
-	public ResponseEntity<Vehicle> updateVehicle(@RequestBody VehicleDTO vehicle ) {
-		
+	public ResponseEntity<Vehicle> updateVehicle(@RequestBody VehicleDTO vehicle, Principal principal ) {
+		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
+		for (BranchOffice office : rentaCar.getBranchOffices()) {
+			if(office.getId()==vehicle.getIdOffice()) {
+				vehicle.setBranchOffice(office);
+			}
+		}		
+		vehicle.setRentacar(rentaCar);
 		return new ResponseEntity<Vehicle>(vehicleService.update(vehicle), HttpStatus.OK);
 	}
 	

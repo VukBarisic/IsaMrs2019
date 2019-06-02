@@ -1,5 +1,8 @@
 package com.smv.AirSpace.dto;
 
+import com.smv.AirSpace.model.BranchOffice;
+import com.smv.AirSpace.model.Rentacar;
+
 public class VehicleDTO {
 	
 	private String model;
@@ -10,6 +13,9 @@ public class VehicleDTO {
 	private Long idOffice;
 	private int pricePerDay;
 	
+	//test
+	private Rentacar rentacar;
+	private BranchOffice branchOffice;
 	
 	public VehicleDTO() {
 		super();
@@ -81,6 +87,20 @@ public class VehicleDTO {
 	}
 	public void setPricePerDay(int pricePerDay) {
 		this.pricePerDay = pricePerDay;
+	}
+	
+	//test----------------------------------
+	public Rentacar getRentacar() {
+		return rentacar;
+	}
+	public void setRentacar(Rentacar rentacar) {
+		this.rentacar = rentacar;
+	}
+	public BranchOffice getBranchOffice() {
+		return branchOffice;
+	}
+	public void setBranchOffice(BranchOffice branchOffice) {
+		this.branchOffice = branchOffice;
 	}
 	
 	

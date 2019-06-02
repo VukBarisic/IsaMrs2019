@@ -30,6 +30,8 @@ public class Rentacar {
 	private double rating;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "rentacar")
     private List<BranchOffice> branchOffices;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "rentacar")
+    private List<Vehicle> vehicles;
 	public Rentacar(){
 
 	}
@@ -101,5 +103,17 @@ public class Rentacar {
 
 	public void setBranchOffices(List<BranchOffice> branchOffices) {
 		this.branchOffices = branchOffices;
+	}
+
+
+
+	public List<Vehicle> getVehicles() {
+		return vehicles;
+	}
+
+
+
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 }
