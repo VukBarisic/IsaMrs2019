@@ -1,0 +1,33 @@
+
+insert into airspace.address(id, city, state, street) values (1, "Beograd", "Beograd", "Beograd");
+insert into airspace.address(id, city, state, street) values (2, "Novi Sad", "Novi Sad", "Novi Sad");
+insert into airspace.address(id, city, state, street) values (3, "Nis", "Nis", "Nis");
+
+insert into airspace.location(id, x, y, address_id) values (1,1,1,1);
+insert into airspace.location(id, x, y, address_id) values (2,2,2,2);
+insert into airspace.location(id, x, y, address_id) values (3,3,3,3);
+
+insert into airspace.rentacar(id, description, name, rating, location_id) values (-1, "Ovo je prva kompanija", "BeogradRent", 100, 1);
+insert into airspace.rentacar(id, description, name, rating, location_id) values (-2, "Ovo je druga kompanija", "NoviSadRent", 100, 2);
+insert into airspace.rentacar(id, description, name, rating, location_id) values (-3, "Ovo je trecakompanija", "NisRent", 100, 3);
+
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-1, "Beograd", 1, -1);
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-2, "Novi Sad", 2, -1);
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-3, "Nis", 3, -1);
+
+
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-4, "Beograd", 1, -2);
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-5, "Novi Sad", 2, -2);
+
+
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-6, "Nis", 3, -3);
+insert into airspace.branchoffice(id, office_name, location_id, rentacar_id) values (-7, "Novi Sad", 2, -3);
+
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-1, 1, 'test1', 'auto', 2015, 1, 1, 'audi',5, 5, 100, -1);
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-2, 1, 'test2', 'auto', 2010, 1, 1, 'bmw',5, 5, 100, -2);
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-3, 1, 'test3', 'auto', 2011, 1, 1, 'mercedes',5, 5, 100, -3);
+
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-4, 1, 'test4', 'auto', 2014, 1, 1, 'opel',5, 5, 100, -4)
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-5, 1, 'test1', 'auto', 2015, 1, 1, 'nissan',5, 5, 100, -5);
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-6, 1, 'test2', 'auto', 2010, 1, 1, 'toyota',5, 5, 100, -6);
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_office, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id) values (-7, 1, 'test3', 'auto', 2011, 1, 1, 'subaru',5, 5, 100, -7);
