@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.smv.AirSpace.dto.RoomDTO;
@@ -26,7 +27,8 @@ public class Room {
 	private int numOfBeds;
 	private double price;
 	private double rating;
-	private boolean available;
+	@ManyToOne()
+    private Hotel hotel;
 	
 	public Room() {
 	
@@ -42,7 +44,6 @@ public class Room {
 		this.numOfBeds = numOfBeds;
 		this.price = price;
 		this.rating = rating;
-		this.available = available;
 	}
 	
 	public Room(RoomDTO roomDTO) {
@@ -95,12 +96,5 @@ public class Room {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
-	public boolean isAvailable() {
-		return available;
-	}
-	public void setAvailable(boolean available) {
-		this.available = available;
-	}
-	
 	
 }

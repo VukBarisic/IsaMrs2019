@@ -75,6 +75,19 @@ public class HotelServiceImpl implements HotelService {
 	public Hotel findById(long id) {
 		return hotelRepository.findById(id);
 	}
+	
+	@Override
+	public List<Hotel> searchByName(String name) {
+		List<Hotel> hotels = new ArrayList<>();
+		for (Hotel c : hotelRepository.findAll()) {
+			if (c.getName().toLowerCase().contains(name.toLowerCase())) {
+				hotels.add(c);
+			}
+		}
+		return hotels;
+	}
+
+	
 
 
 
