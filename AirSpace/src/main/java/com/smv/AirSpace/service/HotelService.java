@@ -15,6 +15,7 @@ public interface HotelService {
 	Hotel findByName(String Name);
 	Hotel findById(long id);
 	List<Room> getRoomsShow(String name);
+	List<Hotel> searchByName(String name);
 
 
 }

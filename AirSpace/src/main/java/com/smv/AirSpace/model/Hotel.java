@@ -27,9 +27,9 @@ public class Hotel {
 	private int stars;
 	private String description;
 	private double rating;
-    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Location location;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
 	private List<Room> rooms;
 	
 	public Hotel() {

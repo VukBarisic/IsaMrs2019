@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,8 +48,8 @@ public class HotelAdminController {
 	}
 	
 
-	@RequestMapping(value = "/get_rooms", method = RequestMethod.GET)
-	public ResponseEntity<List<RoomDTO>> getRooms(@RequestParam(name = "hotelName") String hotelName) {
+	@RequestMapping(value = "/get_rooms/{name}", method = RequestMethod.GET)
+	public ResponseEntity<List<RoomDTO>> getRooms(@PathVariable("name") String hotelName) {
 		Hotel hotel = hotelService.findByName(hotelName);
 		List<Room> rooms = new ArrayList<>();
 		List<RoomDTO> roomDTOs = new ArrayList<>();
