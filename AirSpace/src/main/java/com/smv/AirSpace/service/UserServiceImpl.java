@@ -261,7 +261,14 @@ public class UserServiceImpl implements UserService {
 		return updated;
 
 	}
-
+	
+	public User getUserById(Long id) {
+		User user = userRepository.findById(id);
+		if(user == null) {
+			throw new ResourceNotFoundException();
+		}
+		return user;
+	}
 
 	public User getUserByUsername(String username) {
 		User user = userRepository.findByUsername(username);

@@ -95,6 +95,7 @@ public class VehicleController {
 		return new ResponseEntity<Vehicle>(vehicleService.findByID(id), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@PutMapping()
 	public ResponseEntity<Vehicle> updateVehicle(@RequestBody VehicleDTO vehicle, Principal principal ) {
 		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
@@ -107,6 +108,7 @@ public class VehicleController {
 		return new ResponseEntity<Vehicle>(vehicleService.update(vehicle), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@DeleteMapping(value = "/{param}")
 	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Long id) {
 		vehicleService.delete(id);
