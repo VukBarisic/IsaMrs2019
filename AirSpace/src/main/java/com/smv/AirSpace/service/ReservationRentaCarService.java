@@ -75,7 +75,7 @@ public class ReservationRentaCarService {
 					iter1.remove();
 				}
 			}
-			if(vehicle.getNumOfSeats()!=Integer.parseInt(numberOfSeats)) {
+			if(vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
 				iter1.remove();
 			}
 		}		

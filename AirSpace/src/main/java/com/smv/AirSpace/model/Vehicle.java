@@ -80,6 +80,7 @@ public class Vehicle {
 		this.pricePerDay = dto.getPricePerDay();
 		this.rentacar = dto.getRentacar();
 		this.branchoffice = dto.getBranchOffice();
+		this.cityLocation = dto.getCityLocation();
 	}
 
 
