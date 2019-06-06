@@ -30,7 +30,7 @@ public class ReservationRentaCarService {
 
 	public List<Vehicle> getReservationsByRentaCarID(String dateFrom, String dateUntil, String numberOfSeats, Long id)
 			throws ParseException {
-		dateFrom = dateFrom.substring(1);
+		//dateFrom = dateFrom.substring(1);
 		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		reservations = reservationRentaCarRepository.findAll();
