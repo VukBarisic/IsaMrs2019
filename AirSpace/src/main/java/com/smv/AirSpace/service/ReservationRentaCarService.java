@@ -22,30 +22,36 @@ public class ReservationRentaCarService {
 	@Autowired
 	ReservationRentaCarRepository reservationRentaCarRepository;
 
-	public List<Vehicle> getReservationsByRentaCarID(String dateFrom, String dateUntil,String numberOfSeats, Long id) throws ParseException {
+	@Autowired
+	UserServiceImpl userService;
+
+	@Autowired
+	VehicleService vehicleService;
+
+	public List<Vehicle> getReservationsByRentaCarID(String dateFrom, String dateUntil, String numberOfSeats, Long id)
+			throws ParseException {
 		dateFrom = dateFrom.substring(1);
 		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		reservations = reservationRentaCarRepository.findAll();
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
 		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(dateUntil);
-		
+
 		Iterator<ReservationRentaCar> iterator = reservations.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			ReservationRentaCar reservation = iterator.next();
 			if (reservation.getRentacar().getId() != id) {
 				iterator.remove();
 			}
-		}		
+		}
 		List<Long> unavailableVehicles = new ArrayList<Long>();
 		Iterator<ReservationRentaCar> iter = reservations.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			ReservationRentaCar reservation = iter.next();
 			if (date1.after(reservation.getDateFrom()) && date2.before(reservation.getDateUntil())) {
 				iter.remove();
 				unavailableVehicles.add(reservation.getVehicle().getId());
-			} else if (date1.before(reservation.getDateFrom())
-					&& date2.after(reservation.getDateUntil())) {
+			} else if (date1.before(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
 				iter.remove();
 				unavailableVehicles.add(reservation.getVehicle().getId());
 			} else if (date1.before(reservation.getDateFrom()) && date2.after(reservation.getDateFrom())
@@ -56,36 +62,36 @@ public class ReservationRentaCarService {
 					&& date2.after(reservation.getDateUntil())) {
 				iter.remove();
 				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.equals(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
 			}
-		}		
+		}
 		for (ReservationRentaCar reservationRentaCar : reservations) {
-			if(vehicles.contains(reservationRentaCar.getVehicle())){
-				//System.out.println("Ovo vozilo je vec u listi");
-			}
-			else{
+			if (vehicles.contains(reservationRentaCar.getVehicle())) {
+				// System.out.println("Ovo vozilo je vec u listi");
+			} else {
 				vehicles.add(reservationRentaCar.getVehicle());
 			}
-		}		
-		//Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
+		}
+		// Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
 		Iterator<Vehicle> iter1 = vehicles.iterator();
-		while(iter1.hasNext()) {
+		while (iter1.hasNext()) {
 			Vehicle vehicle = iter1.next();
 			for (Long long1 : unavailableVehicles) {
-				if(vehicle.getId().equals(long1)) {
+				if (vehicle.getId().equals(long1)) {
 					iter1.remove();
 				}
 			}
-			if(vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
+			if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
 				iter1.remove();
 			}
-		}		
+		}
 		return vehicles;
 	}
 
-	public ReservationRentaCar saveReservation(ReservationRentaCarDTO reservationDTO) {
-			ReservationRentaCar reservation = new ReservationRentaCar(reservationDTO);
-			
-			reservationRentaCarRepository.save(reservation);
-			return reservation;
-		}
+	public ReservationRentaCar saveReservation(ReservationRentaCar reservation) {
+
+		return reservationRentaCarRepository.save(reservation);
+	}
 }

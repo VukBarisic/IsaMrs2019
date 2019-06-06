@@ -31,15 +31,6 @@ public class ReservationRentaCar {
 	
 	
 	
-	
-	
-	public ReservationRentaCar() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-
-
 	public ReservationRentaCar(Long id, Rentacar rentacar, User user, Vehicle vehicle, Date dateFrom, Date dateUntil) {
 		super();
 		this.id = id;
@@ -52,18 +43,15 @@ public class ReservationRentaCar {
 
 
 
-	public ReservationRentaCar(ReservationRentaCarDTO dto) {
-		this.id = dto.getId();
-		this.rentacar = dto.getRentacar();
-		this.user = dto.getUser();
-		this.vehicle = dto.getVehicle();
-		this.dateFrom = dto.getDateFrom();
-		this.dateUntil = dto.getDateUntil();
 
+	
+	
+	public ReservationRentaCar() {
+		// TODO Auto-generated constructor stub
 	}
 
-	
-	
+
+
 	public Long getId() {
 		return id;
 	}

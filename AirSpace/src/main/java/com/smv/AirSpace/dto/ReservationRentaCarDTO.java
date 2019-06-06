@@ -1,32 +1,26 @@
 package com.smv.AirSpace.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.smv.AirSpace.model.Rentacar;
-import com.smv.AirSpace.model.User;
-import com.smv.AirSpace.model.Vehicle;
 
 public class ReservationRentaCarDTO {
 	
 	private Long id;	
-	private Long rentacarId;
 	private Long userId;
 	private Long vehicleId;	
-	private Date dateFrom;
-	private Date dateUntil;
+	private String dateFrom;
+	private String dateUntil;
 	
+	public ReservationRentaCarDTO() {
+		
+	}
 	
-	
-	private Rentacar rentacar;
-	private User user;
-	private Vehicle vehicle;
-	
-	
-	public ReservationRentaCarDTO(Long id, Long rentacarId, Long userId, Long vehicleId, Date dateFrom,
-			Date dateUntil) {
+	public ReservationRentaCarDTO(Long id, Long rentacarId, Long userId, Long vehicleId, String dateFrom,
+			String dateUntil) {
 		super();
 		this.id = id;
-		this.rentacarId = rentacarId;
 		this.userId = userId;
 		this.vehicleId = vehicleId;
 		this.dateFrom = dateFrom;
@@ -39,12 +33,6 @@ public class ReservationRentaCarDTO {
 		this.id = id;
 	}
 
-	public Long getRentacarId() {
-		return rentacarId;
-	}
-	public void setRentacarId(Long rentacarId) {
-		this.rentacarId = rentacarId;
-	}
 	public Long getUserId() {
 		return userId;
 	}
@@ -57,36 +45,20 @@ public class ReservationRentaCarDTO {
 	public void setVehicleId(Long vehicleId) {
 		this.vehicleId = vehicleId;
 	}
-	public Date getDateFrom() {
-		return dateFrom;
+	public Date getDateFrom() throws ParseException {
+		return new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
 	}
-	public void setDateFrom(Date dateFrom) {
+	public void setDateFrom(String dateFrom) {
 		this.dateFrom = dateFrom;
 	}
-	public Date getDateUntil() {
-		return dateUntil;
+	
+	
+	public Date getDateUntil() throws ParseException {
+		return new SimpleDateFormat("yyyy-MM-dd").parse(dateUntil);
 	}
-	public void setDateUntil(Date dateUntil) {
+	public void setDateUntil(String dateUntil) {
 		this.dateUntil = dateUntil;
 	}
-	public Rentacar getRentacar() {
-		return rentacar;
-	}
-	public void setRentacar(Rentacar rentacar2) {
-		this.rentacar = rentacar2;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
-	}
-	
+
 	
 }

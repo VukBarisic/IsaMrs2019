@@ -36,8 +36,8 @@ public class VehicleService {
 			
 		}
 		*/
-		vehicleRepository.save(vehicle);
-		return vehicle;
+		
+		return vehicleRepository.save(vehicle);
 	}
 	
 	public List<Vehicle> getAllVehicles(){

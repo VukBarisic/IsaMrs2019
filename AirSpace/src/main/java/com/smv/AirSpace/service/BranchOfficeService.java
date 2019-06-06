@@ -40,8 +40,7 @@ public class BranchOfficeService {
 			
 		}
 		*/
-		branchOfficeRepository.save(office);
-		return office;
+		return branchOfficeRepository.save(office);
 	}
 	
 	public BranchOffice update(BranchOfficeDTO officeDTO) {

@@ -46,6 +46,8 @@ public class BranchOfficeController {
 		officeDTO.setRentacar(rentaCar);
 		BranchOffice office = branchOfficeService.saveOffice(officeDTO);		
 		rentaCar.getBranchOffices().add(office);
+		rentaCarService.saveRentacar(rentaCar);
+		System.out.println(office.getId());
 		return new ResponseEntity<BranchOffice>(office, HttpStatus.CREATED);
 	}
 	

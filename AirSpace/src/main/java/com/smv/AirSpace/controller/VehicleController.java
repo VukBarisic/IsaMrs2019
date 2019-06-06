@@ -51,6 +51,7 @@ public class VehicleController {
 		vehicleDTO.setRentacar(rentaCar);
 		Vehicle vehicle = vehicleService.saveVehicle(vehicleDTO);		
 		rentaCar.getVehicles().add(vehicle);
+		rentaCarService.saveRentacar(rentaCar);
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.CREATED);
 	}
 	/*

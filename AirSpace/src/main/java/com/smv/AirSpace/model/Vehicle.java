@@ -172,6 +172,9 @@ public class Vehicle {
 		this.pricePerDay = pricePerDay;
 	}
 	
+	public Rentacar findRentaCar() {
+		return rentacar;
+	}
 	
 	
 	

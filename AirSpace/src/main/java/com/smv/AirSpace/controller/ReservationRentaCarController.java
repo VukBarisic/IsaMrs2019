@@ -50,18 +50,18 @@ public class ReservationRentaCarController {
 	}
 	
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<ReservationRentaCar> addReservation(@RequestBody ReservationRentaCarDTO reservationDTO) {		
-		Optional<Rentacar> rentaCar = rentaCarService.findByID(reservationDTO.getRentacarId());
+	public ResponseEntity<ReservationRentaCar> addReservation(@RequestBody ReservationRentaCarDTO reservationDTO) throws ParseException {	
+		ReservationRentaCar reservation = new ReservationRentaCar();
 		Vehicle vehicle = vehicleService.findByID(reservationDTO.getVehicleId());
-		User user = userService.getUserById(reservationDTO.getUserId());
+		Rentacar rentaCar = vehicle.findRentaCar();
+		User user = userService.getLoggedUser();
+		reservation.setUser(user);
+		reservation.setDateFrom(reservationDTO.getDateFrom());
+		reservation.setDateUntil(reservationDTO.getDateUntil());
+		reservation.setRentacar(rentaCar);
+		reservation.setVehicle(vehicle);
 		
-		if(rentaCar.isPresent()) {
-			reservationDTO.setRentacar(rentaCar.get());
-		}
-		reservationDTO.setVehicle(vehicle);
-		reservationDTO.setUser(user);
-		
-		ReservationRentaCar reservation = reservationRentaCarService.saveReservation(reservationDTO);		
+		reservation = reservationRentaCarService.saveReservation(reservation);		
 		return new ResponseEntity<ReservationRentaCar>(reservation, HttpStatus.CREATED);
 	}
 }
