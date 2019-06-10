@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -205,5 +206,11 @@ public class SysAdminContoller {
 			return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@RequestMapping(value = "/search_by_name/{name}", method = RequestMethod.GET)
+    public ResponseEntity<List<Hotel>> searchByName(@PathVariable("name") String name) {
+    	List<Hotel> hotels = hotelService.searchByName(name);
+    	return new ResponseEntity<List<Hotel>>(hotels, HttpStatus.OK);
+    }
 
 }

@@ -16,6 +16,7 @@ public interface HotelService {
 	Hotel findById(long id);
 	List<Room> getRoomsShow(String name);
 	List<Hotel> searchByName(String name);
+	boolean deleteRoom(long id);
 
 
 }

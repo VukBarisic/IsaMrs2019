@@ -10,6 +10,7 @@ import com.smv.AirSpace.dto.RoomDTO;
 import com.smv.AirSpace.model.Hotel;
 import com.smv.AirSpace.model.Room;
 import com.smv.AirSpace.repository.HotelRepository;
+import com.smv.AirSpace.repository.RoomRepository;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -18,20 +19,22 @@ public class HotelServiceImpl implements HotelService {
 	HotelRepository hotelRepository;
 	
 	@Autowired
+	RoomRepository roomRepository;
+	
+	@Autowired
 	UserService userService;
 	
 	@Override
 	public boolean saveRoom(RoomDTO roomDTO) {
 		Hotel hotel = hotelRepository.findByName("dash");
 		Room room = new Room(roomDTO);
-		hotel.getRooms().add(room);
-		Hotel savedHotel = hotelRepository.save(hotel);
-		if (savedHotel != null) {
+		room.setHotel(hotel);
+		if (room != null) {
+			roomRepository.save(room);
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
+		
 	}
 
 	@Override
@@ -85,6 +88,17 @@ public class HotelServiceImpl implements HotelService {
 			}
 		}
 		return hotels;
+	}
+
+	@Override
+	public boolean deleteRoom(long id) {
+		try {
+			roomRepository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	

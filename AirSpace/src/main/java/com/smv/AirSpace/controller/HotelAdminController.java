@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +65,26 @@ public class HotelAdminController {
 			return new ResponseEntity<List<RoomDTO>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
+	public ResponseEntity<Boolean> deleteRoom(@PathVariable("id") Long id) {
+
+		boolean retValue;
+
+		try {
+
+			retValue = hotelService.deleteRoom(id);
+			if (retValue)
+				return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+			return new ResponseEntity<Boolean>(retValue, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+
+		}
+	}
+
 	
 	
 
