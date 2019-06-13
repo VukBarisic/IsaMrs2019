@@ -45,7 +45,7 @@ public class RentACarController {
 	}
 	
 	@DeleteMapping(value = "/{param}")
-	public ResponseEntity<?> updateRentACar(@PathVariable("param") Long id) {
+	public ResponseEntity<?> deleteRentACar(@PathVariable("param") Long id) {
 		rentaCarService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
