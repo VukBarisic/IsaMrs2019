@@ -173,13 +173,16 @@ public class UserServiceImpl implements UserService {
 
 		if (rentacarDTO.getName() == "" || existsRentacarName(rentacarDTO.getName()))
 			return false;
-
+		/*
 		if (rentacarDTO.getStreet() == null || rentacarDTO.getCity() == null || rentacarDTO.getState() == null)
 			return false;
 
 		Location location = locationSetter(rentacarDTO.getStreet(), rentacarDTO.getCity(), rentacarDTO.getState());
 		Rentacar rentacar = new Rentacar(rentacarDTO);
 		rentacar.setLocation(location);
+		*/
+		Rentacar rentacar = new Rentacar(rentacarDTO);
+		rentacar.setAddress(rentacarDTO.getStreet());
 		rentacarRepository.save(rentacar);
 		return true;
 	}

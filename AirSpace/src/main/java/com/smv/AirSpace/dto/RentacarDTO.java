@@ -10,6 +10,7 @@ public class RentacarDTO {
 	private String city;
 	private String state;
 	private Long id;
+	private String address;
 	
 	public RentacarDTO() {
 		
@@ -17,10 +18,13 @@ public class RentacarDTO {
 	public RentacarDTO(Rentacar rentacar) {
 		this.name = rentacar.getName();
 		this.description = rentacar.getDescription();
-		this.street = rentacar.getLocation().getAddress().getStreet();
+		this.id = rentacar.getId();
+		/*this.street = rentacar.getLocation().getAddress().getStreet();
 		this.city = rentacar.getLocation().getAddress().getCity();
 		this.state = rentacar.getLocation().getAddress().getState();
 		this.id = rentacar.getLocation().getAddress().getId();
+		*/
+		this.street = rentacar.getAddress();
 	}
 	
 	public String getName() {
@@ -60,6 +64,12 @@ public class RentacarDTO {
 	
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	

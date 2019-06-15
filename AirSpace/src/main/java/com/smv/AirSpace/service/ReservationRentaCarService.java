@@ -81,6 +81,22 @@ public class ReservationRentaCarService {
 				iter.remove();
 				unavailableVehicles.add(reservation.getVehicle().getId());
 			}
+			  else if (date1.equals(reservation.getDateFrom()) && date2.before(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			}
+			  else if (date1.equals(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
+					iter.remove();
+					unavailableVehicles.add(reservation.getVehicle().getId());
+			}
+			  else if (date1.before(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+					iter.remove();
+					unavailableVehicles.add(reservation.getVehicle().getId());
+			}
+			  else if (date1.after(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+					iter.remove();
+					unavailableVehicles.add(reservation.getVehicle().getId());
+			}
 		}
 		for (ReservationRentaCar reservationRentaCar : reservations) {
 			if (vehicles.contains(reservationRentaCar.getVehicle())) {

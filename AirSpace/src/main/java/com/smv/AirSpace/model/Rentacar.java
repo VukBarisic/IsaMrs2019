@@ -25,8 +25,11 @@ public class Rentacar {
 	private Long id;
 	private String name;
 	private String description;
+	private String address;
+	/*
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private Location location;
+	*/
 	private double rating;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "rentacar")
     private List<BranchOffice> branchOffices;
@@ -52,10 +55,11 @@ public class Rentacar {
 		this.id =rentacarDTO.getId();
 		this.name = rentacarDTO.getName();
 		this.description = rentacarDTO.getDescription();
+		this.address = rentacarDTO.getAddress();
 		this.rating = 0.0;
 	}
 
-
+	/*
 	public Location getLocation() {
 		return location;
 	}
@@ -66,7 +70,7 @@ public class Rentacar {
 		this.location = location;
 	}
 
-
+*/
 
 	public Long getId() {
 		return id;
@@ -118,5 +122,17 @@ public class Rentacar {
 
 	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
+	}
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
