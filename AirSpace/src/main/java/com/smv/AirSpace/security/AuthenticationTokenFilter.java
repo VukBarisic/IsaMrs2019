@@ -24,7 +24,6 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
