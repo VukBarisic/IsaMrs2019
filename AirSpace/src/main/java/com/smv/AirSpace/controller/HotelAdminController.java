@@ -7,18 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smv.AirSpace.dto.AdminUpdateDTO;
 import com.smv.AirSpace.dto.RoomDTO;
 import com.smv.AirSpace.model.Hotel;
 import com.smv.AirSpace.model.Room;
 import com.smv.AirSpace.service.HotelService;
+import com.smv.AirSpace.service.UserService;
 
 @RestController
 @RequestMapping(value = "/hotel_admin")
@@ -26,8 +27,10 @@ public class HotelAdminController {
 	
 	@Autowired
 	HotelService hotelService;
+	@Autowired
+	UserService userService;
 	
-
+	
 
 	@RequestMapping(value = "/add_room", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> addRoom(@RequestBody RoomDTO roomDTO) {
@@ -48,7 +51,7 @@ public class HotelAdminController {
 		}
 	}
 	
-
+	@PreAuthorize("hasAuthority('HOTEL_ADMIN')")
 	@RequestMapping(value = "/get_rooms/{name}", method = RequestMethod.GET)
 	public ResponseEntity<List<RoomDTO>> getRooms(@PathVariable("name") String hotelName) {
 		Hotel hotel = hotelService.findByName(hotelName);
@@ -81,6 +84,24 @@ public class HotelAdminController {
 		} catch (Exception e) {
 
 			return new ResponseEntity<Boolean>(HttpStatus.BAD_REQUEST);
+
+		}
+	}
+	
+	@RequestMapping(value = "/update-admin", method = RequestMethod.PUT)
+	public ResponseEntity updateAdmin(@RequestBody AdminUpdateDTO userDTO) {
+
+		boolean retValue;
+
+		try {
+			retValue = userService.updateHotelAdmin(userDTO);
+			if (retValue)
+				return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 		}
 	}

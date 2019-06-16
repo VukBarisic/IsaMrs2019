@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.smv.AirSpace.dto.AdminUpdateDTO;
 import com.smv.AirSpace.dto.AirlineDTO;
 import com.smv.AirSpace.dto.HotelDTO;
 import com.smv.AirSpace.dto.RegisterUserEditDTO;
@@ -92,12 +93,14 @@ public class UserServiceImpl implements UserService {
 			return false;
 		if (userType != UserType.SYS_ADMIN && companyId == null)
 			return false;
-		User user = new User(username, "admin", email, userType, UserStatus.PENDING, companyId);
+		User user = new User(username, passwordEncoder.encode("admin"), email, userType, UserStatus.ACTIVATED, companyId);
 		try {
 			userRepository.save(user);
+			/*
 			emailService.sendMail(user, "Activation link",
 					"Please follow link below to activate \nhttp://localhost:8080/api/user/activate/"
 							+ user.getUuid());
+			*/
 		} catch (Exception e) {
 			return false;
 		}
@@ -289,5 +292,46 @@ public class UserServiceImpl implements UserService {
 			throw e;
 		}
 	}
+	
+	public boolean updateHotelAdmin(AdminUpdateDTO adminUpdate) {
+		User admin = userRepository.findByUsername(adminUpdate.getUsername());
+		boolean updated = true;
+
+		if(admin == null){
+			return false;
+		}
+
+		if(adminUpdate.getEmail() != null){
+			admin.setEmail(adminUpdate.getEmail());
+		}
+		else {
+			updated = false;
+		}
+		if(adminUpdate.getNewPassword() != null && adminUpdate.getNewPassword() != "" ) {
+			if(adminUpdate.getOldPassword() != null && adminUpdate.getOldPassword() != "") {
+				if (passwordEncoder.matches(adminUpdate.getOldPassword(), admin.getPassword())) {
+					admin.setPassword(passwordEncoder.encode(adminUpdate.getNewPassword()));
+				}
+				else {
+					return false;
+				}
+			
+			}
+			else {
+				return false;
+			}
+		}
+
+		try {
+			if (updated) userRepository.save(admin);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+
+		return updated;
+
+	}
+	
 
 }
