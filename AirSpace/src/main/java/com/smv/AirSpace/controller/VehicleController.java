@@ -81,14 +81,16 @@ public class VehicleController {
 
 	}
 	
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@RequestMapping(value="/getVehicleByModel/{searchParam}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getVehicleByModel(@PathVariable String searchParam) {
-		return new ResponseEntity<List<Vehicle>>(vehicleService.findByModel(searchParam), HttpStatus.OK);
+	public ResponseEntity<?> getVehicleByModel(@PathVariable String searchParam, Principal principal) {
+		return new ResponseEntity<List<Vehicle>>(vehicleService.findByModel(searchParam, principal), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@RequestMapping(value="/getVehicleByGearBox/{searchParam}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getVehicleByGearBox(@PathVariable String searchParam) {
-		return new ResponseEntity<List<Vehicle>>(vehicleService.findByGearBox(searchParam), HttpStatus.OK);
+	public ResponseEntity<?> getVehicleByGearBox(@PathVariable String searchParam, Principal principal) {
+		return new ResponseEntity<List<Vehicle>>(vehicleService.findByGearBox(searchParam, principal), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{param}", produces = MediaType.APPLICATION_JSON_VALUE)
