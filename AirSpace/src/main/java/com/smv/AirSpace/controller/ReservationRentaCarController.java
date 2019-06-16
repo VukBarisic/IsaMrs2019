@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,15 @@ public class ReservationRentaCarController {
 		return new ResponseEntity<List<Vehicle>>(reservationRentaCarService.getReservationsByRentaCarID(dateFrom, dateUntil,numberOfseats, id), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/getReservationByUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getReservationByUser(){
+		User user = userService.getLoggedUser();
+		return new ResponseEntity<List<ReservationRentaCar>>(reservationRentaCarService.getReservationsByUserID(user.getId()), HttpStatus.OK);
+	}
+	
+	
+	
+	
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<ReservationRentaCar> addReservation(@RequestBody ReservationRentaCarDTO reservationDTO) throws ParseException {	
 		ReservationRentaCar reservation = new ReservationRentaCar();
@@ -64,4 +74,12 @@ public class ReservationRentaCarController {
 		reservation = reservationRentaCarService.saveReservation(reservation);		
 		return new ResponseEntity<ReservationRentaCar>(reservation, HttpStatus.CREATED);
 	}
+	
+	@DeleteMapping(value = "/{param}")
+	public ResponseEntity<Void> deleteReservation(@PathVariable("param") Long id) {
+		reservationRentaCarService.delete(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
 }

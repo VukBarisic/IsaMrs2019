@@ -85,4 +85,14 @@ public class BranchOffice {
 	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

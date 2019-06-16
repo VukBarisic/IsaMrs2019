@@ -16,9 +16,10 @@ public class RentacarFrontDTO {
 			this.id = rentacar.getId();
 			this.name =  rentacar.getName();
 			this.description = rentacar.getDescription();
-			this.street = rentacar.getLocation().getAddress().getStreet();
-			this.city = rentacar.getLocation().getAddress().getCity();
-			this.state = rentacar.getLocation().getAddress().getState();
+			this.street = rentacar.getAddress();
+			//this.street = rentacar.getLocation().getAddress().getStreet();
+			//this.city = rentacar.getLocation().getAddress().getCity();
+			//this.state = rentacar.getLocation().getAddress().getState();
 			this.rating = rentacar.getRating();
 			
 		}
