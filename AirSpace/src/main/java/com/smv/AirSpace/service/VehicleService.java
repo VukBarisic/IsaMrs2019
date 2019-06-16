@@ -54,24 +54,26 @@ public class VehicleService {
 		
 	}
 	
-	public List<Vehicle> findByGearBox(String searchParam) {
+	public List<Vehicle> findByGearBox(String searchParam, Principal principal) {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		List<Vehicle> rets = new ArrayList<Vehicle>();
+		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
 		vehicles = vehicleRepository.findAll();
 		for (Vehicle vehicle : vehicles) {
-			if(vehicle.getGearBox().toLowerCase().contains(searchParam.toLowerCase())){
+			if(vehicle.getGearBox().toLowerCase().contains(searchParam.toLowerCase()) & vehicle.findRentaCar().getId()==rentaCar.getId()){
 				rets.add(vehicle);
 			}
 		}
 		return rets;
 	}
 	
-	public List<Vehicle> findByModel(String searchParam) {
+	public List<Vehicle> findByModel(String searchParam, Principal principal) {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		List<Vehicle> rets = new ArrayList<Vehicle>();
+		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
 		vehicles = vehicleRepository.findAll();
 		for (Vehicle vehicle : vehicles) {
-			if(vehicle.getModel().toLowerCase().contains(searchParam.toLowerCase())){
+			if(vehicle.getModel().toLowerCase().contains(searchParam.toLowerCase()) & vehicle.findRentaCar().getId()==rentaCar.getId()){
 				rets.add(vehicle);
 			}
 		}
