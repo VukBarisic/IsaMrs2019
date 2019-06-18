@@ -17,6 +17,7 @@ public interface HotelService {
 	List<Room> getRoomsShow(String name);
 	List<Hotel> searchByName(String name);
 	boolean deleteRoom(long id);
+	Hotel findByAdmin(String username);
 
 
 }
