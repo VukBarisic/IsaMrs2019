@@ -11,13 +11,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smv.AirSpace.dto.ReservationRentaCarDTO;
 import com.smv.AirSpace.model.ReservationRentaCar;
 import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.ReservationRentaCarRepository;
 
 import exceptions.ReservationDoesntExistException;
-import exceptions.VehicleDoesntExistException;
 
 @Service
 public class ReservationRentaCarService {
@@ -31,9 +29,11 @@ public class ReservationRentaCarService {
 	@Autowired
 	VehicleService vehicleService;
 
-	public List<Vehicle> getReservationsByRentaCarID(String dateFrom, String dateUntil, String numberOfSeats, Long id)
+	@Autowired
+	HotelServiceImpl hotelService;
+
+	public List<Vehicle> getReservationsByHotelLocation(String dateFrom, String dateUntil, Long hotelId)
 			throws ParseException {
-		// dateFrom = dateFrom.substring(1);
 		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		reservations = reservationRentaCarRepository.findAll();
@@ -43,22 +43,16 @@ public class ReservationRentaCarService {
 		// sva vozila
 		vehicles = vehicleService.getAllVehicles();
 
-		// brise vozila koja nisu od tog R.cara
-		Iterator<Vehicle> veh = vehicles.iterator();
-		while (veh.hasNext()) {
-			Vehicle vehicle = veh.next();
-			if (vehicle.findRentaCar().getId() != id) {
-				veh.remove();
-			}
-		}
-
+		// izbaci rezervacije koje nisu u tom gradu
 		Iterator<ReservationRentaCar> iterator = reservations.iterator();
 		while (iterator.hasNext()) {
 			ReservationRentaCar reservation = iterator.next();
-			if (reservation.getRentacar().getId() != id) {
+			if (!(reservation.getVehicle().getCityLocation().toLowerCase()
+					.equals(hotelService.findById(hotelId).getLocation().getAddress().getCity().toLowerCase()))) {
 				iterator.remove();
 			}
 		}
+
 		List<Long> unavailableVehicles = new ArrayList<Long>();
 		Iterator<ReservationRentaCar> iter = reservations.iterator();
 		while (iter.hasNext()) {
@@ -80,31 +74,38 @@ public class ReservationRentaCarService {
 			} else if (date1.equals(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
 				iter.remove();
 				unavailableVehicles.add(reservation.getVehicle().getId());
-			}
-			  else if (date1.equals(reservation.getDateFrom()) && date2.before(reservation.getDateUntil())) {
+			} else if (date1.equals(reservation.getDateFrom()) && date2.before(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.equals(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.before(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.after(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
 				iter.remove();
 				unavailableVehicles.add(reservation.getVehicle().getId());
 			}
-			  else if (date1.equals(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
-					iter.remove();
-					unavailableVehicles.add(reservation.getVehicle().getId());
-			}
-			  else if (date1.before(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
-					iter.remove();
-					unavailableVehicles.add(reservation.getVehicle().getId());
-			}
-			  else if (date1.after(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
-					iter.remove();
-					unavailableVehicles.add(reservation.getVehicle().getId());
+		}
+
+		/*
+		 * for (ReservationRentaCar reservationRentaCar : reservations) { if
+		 * (vehicles.contains(reservationRentaCar.getVehicle())) { //
+		 * System.out.println("Ovo vozilo je vec u listi"); } else {
+		 * vehicles.add(reservationRentaCar.getVehicle()); } }
+		 */
+		// brise vozila koja nisu u tom gradu
+		Iterator<Vehicle> veh = vehicles.iterator();
+		while (veh.hasNext()) {
+			Vehicle vehicle = veh.next();
+			// SREDITI HOTEL LOCATION DA BUDE SAMO ADRESA????
+			if (!(vehicle.getCityLocation().toLowerCase()
+					.equals(hotelService.findById(hotelId).getLocation().getAddress().getCity().toLowerCase()))) {
+				veh.remove();
 			}
 		}
-		for (ReservationRentaCar reservationRentaCar : reservations) {
-			if (vehicles.contains(reservationRentaCar.getVehicle())) {
-				// System.out.println("Ovo vozilo je vec u listi");
-			} else {
-				vehicles.add(reservationRentaCar.getVehicle());
-			}
-		}
+
 		// Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
 		Iterator<Vehicle> iter1 = vehicles.iterator();
 		while (iter1.hasNext()) {
@@ -114,8 +115,105 @@ public class ReservationRentaCarService {
 					iter1.remove();
 				}
 			}
-			if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
-				iter1.remove();
+			/*
+			 * if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
+			 * iter1.remove(); }
+			 */
+		}
+		return vehicles;
+	}
+
+	public List<Vehicle> getReservationsByRentaCarID(String dateFrom, String dateUntil, String numberOfSeats,
+			String city, Long id) throws ParseException {
+		// dateFrom = dateFrom.substring(1);
+		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		reservations = reservationRentaCarRepository.findAll();
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(dateUntil);
+
+		// sva vozila
+		vehicles = vehicleService.getAllVehicles();
+
+		// brise vozila koja nisu od tog R.cara
+
+		Iterator<ReservationRentaCar> iterator = reservations.iterator();
+		while (iterator.hasNext()) {
+			ReservationRentaCar reservation = iterator.next();
+			if (reservation.getRentacar().getId() != id) {
+				iterator.remove();
+			}
+		}
+
+		List<Long> unavailableVehicles = new ArrayList<Long>();
+		Iterator<ReservationRentaCar> iter = reservations.iterator();
+		while (iter.hasNext()) {
+			ReservationRentaCar reservation = iter.next();
+			if (date1.after(reservation.getDateFrom()) && date2.before(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.before(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.before(reservation.getDateFrom()) && date2.after(reservation.getDateFrom())
+					&& date2.before(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.after(reservation.getDateFrom()) && date1.before(reservation.getDateUntil())
+					&& date2.after(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.equals(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.equals(reservation.getDateFrom()) && date2.before(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.equals(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.before(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			} else if (date1.after(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				iter.remove();
+				unavailableVehicles.add(reservation.getVehicle().getId());
+			}
+		}
+		/*
+		 * for (ReservationRentaCar reservationRentaCar : reservations) { if
+		 * (vehicles.contains(reservationRentaCar.getVehicle())) { //
+		 * System.out.println("Ovo vozilo je vec u listi"); } else {
+		 * vehicles.add(reservationRentaCar.getVehicle()); } }
+		 */
+		Iterator<Vehicle> veh = vehicles.iterator();
+		while (veh.hasNext()) {
+			Vehicle vehicle = veh.next();
+			if (vehicle.findRentaCar().getId() != id) {
+				veh.remove();
+			}
+			else if((!city.equals("null"))) {
+				if(!(vehicle.getCityLocation().toLowerCase().equals(city.toLowerCase()))) {
+					veh.remove();					
+			}
+			
+				
+			}
+		}
+
+		// Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
+		Iterator<Vehicle> iter1 = vehicles.iterator();
+		while (iter1.hasNext()) {
+			Vehicle vehicle = iter1.next();
+			for (Long long1 : unavailableVehicles) {
+				if (vehicle.getId().equals(long1)) {
+					iter1.remove();
+				} else if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
+					iter1.remove();
+					{
+
+					}
+				}
 			}
 		}
 		return vehicles;
@@ -150,4 +248,5 @@ public class ReservationRentaCarService {
 
 		return reservationRentaCarRepository.save(reservation);
 	}
+
 }

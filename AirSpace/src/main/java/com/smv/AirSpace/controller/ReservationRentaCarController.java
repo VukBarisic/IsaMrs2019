@@ -29,38 +29,45 @@ import com.smv.AirSpace.service.VehicleService;
 @RestController
 @RequestMapping(value = "/reservationRentaCar")
 public class ReservationRentaCarController {
-	
+
 	@Autowired
-	ReservationRentaCarService reservationRentaCarService; 
-	
+	ReservationRentaCarService reservationRentaCarService;
+
 	@Autowired
 	RentacarServiceImpl rentaCarService;
-	
+
 	@Autowired
 	VehicleService vehicleService;
-	
+
 	@Autowired
 	UserServiceImpl userService;
-	
-	
-	
-	@GetMapping(value = "/getVehicleByRentaCarId/{dateFrom}/{dateUntil}/{numberOfSeats}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getReservationsByRentaCarID(@PathVariable("dateFrom") String dateFrom, @PathVariable("dateUntil")  String dateUntil,
-			@PathVariable("numberOfSeats") String numberOfseats,@PathVariable("id") Long id) throws ParseException {
-		return new ResponseEntity<List<Vehicle>>(reservationRentaCarService.getReservationsByRentaCarID(dateFrom, dateUntil,numberOfseats, id), HttpStatus.OK);
+
+	@GetMapping(value = "/getVehicleByRentaCarId/{dateFrom}/{dateUntil}/{numberOfSeats}/{city}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getReservationsByRentaCarID(@PathVariable("dateFrom") String dateFrom,
+			@PathVariable("dateUntil") String dateUntil, @PathVariable("numberOfSeats") String numberOfseats,
+			@PathVariable("city") String city, @PathVariable("id") Long id) throws ParseException {
+		return new ResponseEntity<List<Vehicle>>(
+				reservationRentaCarService.getReservationsByRentaCarID(dateFrom, dateUntil, numberOfseats, city, id),
+				HttpStatus.OK);
 	}
-	
+
+	@GetMapping(value = "/getVehicleByDateAndHotelId/{dateFrom}/{dateUntil}/{hotelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getVehicleByDateAndHotelId(@PathVariable("dateFrom") String dateFrom,
+			@PathVariable("dateUntil") String dateUntil, @PathVariable("hotelId") Long hotelId) throws ParseException {
+		return new ResponseEntity<List<Vehicle>>(
+				reservationRentaCarService.getReservationsByHotelLocation(dateFrom, dateUntil, hotelId), HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/getReservationByUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getReservationByUser(){
+	public ResponseEntity<?> getReservationByUser() {
 		User user = userService.getLoggedUser();
-		return new ResponseEntity<List<ReservationRentaCar>>(reservationRentaCarService.getReservationsByUserID(user.getId()), HttpStatus.OK);
+		return new ResponseEntity<List<ReservationRentaCar>>(
+				reservationRentaCarService.getReservationsByUserID(user.getId()), HttpStatus.OK);
 	}
-	
-	
-	
-	
+
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<ReservationRentaCar> addReservation(@RequestBody ReservationRentaCarDTO reservationDTO) throws ParseException {	
+	public ResponseEntity<ReservationRentaCar> addReservation(@RequestBody ReservationRentaCarDTO reservationDTO)
+			throws ParseException {
 		ReservationRentaCar reservation = new ReservationRentaCar();
 		Vehicle vehicle = vehicleService.findByID(reservationDTO.getVehicleId());
 		Rentacar rentaCar = vehicle.findRentaCar();
@@ -70,16 +77,15 @@ public class ReservationRentaCarController {
 		reservation.setDateUntil(reservationDTO.getDateUntil());
 		reservation.setRentacar(rentaCar);
 		reservation.setVehicle(vehicle);
-		
-		reservation = reservationRentaCarService.saveReservation(reservation);		
+
+		reservation = reservationRentaCarService.saveReservation(reservation);
 		return new ResponseEntity<ReservationRentaCar>(reservation, HttpStatus.CREATED);
 	}
-	
+
 	@DeleteMapping(value = "/{param}")
 	public ResponseEntity<Void> deleteReservation(@PathVariable("param") Long id) {
 		reservationRentaCarService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
+
 }

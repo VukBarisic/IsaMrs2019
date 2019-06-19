@@ -27,46 +27,41 @@ import exceptions.RentacarDoesntExistException;
 @RestController
 @RequestMapping(value = "/rentacar")
 public class RentACarController {
-	
+
 	@Autowired
 	RentacarServiceImpl rentaCarService;
-	
+
 	@Autowired
 	UserServiceImpl userService;
-	
-	
+
 	@GetMapping("/admin")
-	public ResponseEntity<?> getLoggedUserRentaCarCompany(Principal principal){
-		
+	public ResponseEntity<?> getLoggedUserRentaCarCompany(Principal principal) {
+
 		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
-		if(rentaCar!=null) {
+		if (rentaCar != null) {
 			return new ResponseEntity<RentacarDTO>(new RentacarDTO(rentaCar), HttpStatus.OK);
-		} 
+		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@GetMapping(value = "/{param}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getRentaCar(@PathVariable("param") Long id) {
 		Optional<Rentacar> rentaCar = rentaCarService.findByID(id);
-		if(!rentaCar.isPresent()) {
+		if (!rentaCar.isPresent()) {
 			throw new RentacarDoesntExistException();
 		}
 		return new ResponseEntity<Rentacar>(rentaCar.get(), HttpStatus.OK);
 	}
-	
-	
+
 	@PutMapping()
 	public ResponseEntity<Rentacar> updateRentACar(@RequestBody RentacarDTO rentaCar) {
 		return new ResponseEntity<Rentacar>(rentaCarService.update(rentaCar), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping(value = "/{param}")
 	public ResponseEntity<?> deleteRentACar(@PathVariable("param") Long id) {
 		rentaCarService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
 
-	
 }

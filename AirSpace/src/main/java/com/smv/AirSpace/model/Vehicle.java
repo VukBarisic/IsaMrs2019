@@ -32,7 +32,6 @@ public class Vehicle {
 	private double rating;
 	
 	private Long idUser;
-	private Long idOffice;
 	private String cityLocation;
 	private int pricePerDay;
 	
@@ -66,21 +65,20 @@ public class Vehicle {
 		this.godinaProizvodnje = godinaProizvodnje;
 		this.available = true;
 		this.rating = 100.0;
-		this.idOffice = idOffice;
 		this.pricePerDay = pricePerDay;
 	}
 	
-	public Vehicle(VehicleDTO dto) {
+	public Vehicle(VehicleDTO dto, Long userId) {
 		this.id = dto.getId();
 		this.model = dto.getModel();
 		this.gearBox = dto.getGearBox();
 		this.numOfSeats = dto.getNumOfSeats();
 		this.godinaProizvodnje = dto.getGodinaProizvodnje();
-		this.idOffice = dto.getIdOffice();
 		this.pricePerDay = dto.getPricePerDay();
 		this.rentacar = dto.getRentacar();
 		this.branchoffice = dto.getBranchOffice();
 		this.cityLocation = dto.getCityLocation();
+		this.idUser = userId;
 	}
 
 
@@ -146,14 +144,6 @@ public class Vehicle {
 
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
-	}
-
-	public Long getIdOffice() {
-		return idOffice;
-	}
-
-	public void setIdOffice(Long idOffice) {
-		this.idOffice = idOffice;
 	}
 
 	public String getCityLocation() {
