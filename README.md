@@ -1,4 +1,4 @@
-In order to run our app, ypu will need MySQL 8.0.15 or higher for DataBase.. 
+In order to run our app, yOu will need MySQL 8.0.15 or higher for DataBase.. 
 Credentials for DataBase are both username = "root" and password = "root".
 
 Start backend app as "Spring Boot App", there is dummy data that is added to database automaticaly when you start the app.
