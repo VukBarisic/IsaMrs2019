@@ -30,5 +30,7 @@ public interface UserService {
 	public User findByuuid(String uuid); 
 	
 	public boolean updateHotelAdmin(AdminUpdateDTO adminUpdate);
+	
+	public User findByUsername(String username);
 
 }

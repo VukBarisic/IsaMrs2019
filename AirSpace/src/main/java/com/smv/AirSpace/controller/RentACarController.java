@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.smv.AirSpace.dto.RentacarDTO;
 import com.smv.AirSpace.model.Rentacar;
-import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.service.RentacarServiceImpl;
 import com.smv.AirSpace.service.UserServiceImpl;
 
-import exceptions.BranchOfficeDoesntExist;
 import exceptions.RentacarDoesntExistException;
 
 @RestController

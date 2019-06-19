@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.smv.AirSpace.dto.RoomDTO;
 import com.smv.AirSpace.model.Hotel;
 import com.smv.AirSpace.model.Room;
+import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.repository.HotelRepository;
 import com.smv.AirSpace.repository.RoomRepository;
 
@@ -66,6 +67,13 @@ public class HotelServiceImpl implements HotelService {
 		rooms = hotel.getRooms();
 		return rooms;
 	}
+	
+	@Override
+	public Hotel findByAdmin(String username) {
+		User user = userService.findByUsername(username);
+		return hotelRepository.findById(user.getCompanyId());
+	}
+	
 
 	@Override
 	public Hotel findByName(String name) {
