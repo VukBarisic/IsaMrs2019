@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,14 +57,15 @@ public class ReservationRentaCarController {
 		return new ResponseEntity<List<Vehicle>>(
 				reservationRentaCarService.getReservationsByHotelLocation(dateFrom, dateUntil, hotelId), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasAuthority('REGISTERED_USER')")
 	@GetMapping(value = "/getReservationByUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getReservationByUser() {
 		User user = userService.getLoggedUser();
 		return new ResponseEntity<List<ReservationRentaCar>>(
 				reservationRentaCarService.getReservationsByUserID(user.getId()), HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@GetMapping(value = "/getReservationReport/{dateFrom}/{dateUntil}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getReservationReport(@PathVariable("dateFrom") String dateFrom,
 			@PathVariable("dateUntil") String dateUntil, @PathVariable("id") Long id) throws ParseException {
@@ -94,7 +96,8 @@ public class ReservationRentaCarController {
 		reservation = reservationRentaCarService.saveReservation(reservation);
 		return new ResponseEntity<ReservationRentaCar>(reservation, HttpStatus.CREATED);
 	}
-
+	
+	@PreAuthorize("hasAnyAuthority('REGISTERED_USER','RENTACAR_ADMIN')")
 	@DeleteMapping(value = "/{param}")
 	public ResponseEntity<Void> deleteReservation(@PathVariable("param") Long id) {
 		reservationRentaCarService.delete(id);

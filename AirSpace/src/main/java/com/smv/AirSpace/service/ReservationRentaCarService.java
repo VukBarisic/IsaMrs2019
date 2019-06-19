@@ -31,7 +31,6 @@ public class ReservationRentaCarService {
 
 	@Autowired
 	HotelServiceImpl hotelService;
-	
 
 	public List<ReservationRentaCar> getReservationReport(String dateFrom, String dateUntil, Long id)
 			throws ParseException {
@@ -145,22 +144,34 @@ public class ReservationRentaCarService {
 				veh.remove();
 			}
 		}
-
 		// Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
 		Iterator<Vehicle> iter1 = vehicles.iterator();
 		while (iter1.hasNext()) {
 			Vehicle vehicle = iter1.next();
+			if(!vehicle.isAvailable()) {
+				iter1.remove();
+			}
+				
 			for (Long long1 : unavailableVehicles) {
 				if (vehicle.getId().equals(long1)) {
 					iter1.remove();
-				}
+				} 
 			}
-			/*
-			 * if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
-			 * iter1.remove(); }
-			 */
 		}
 		return vehicles;
+	}
+
+	public List<ReservationRentaCar> getReservationsByRentaCar(Long id) {
+		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
+		reservations = reservationRentaCarRepository.findAll();
+		Iterator<ReservationRentaCar> iterator = reservations.iterator();
+		while (iterator.hasNext()) {
+			ReservationRentaCar reservation = iterator.next();
+			if (reservation.getRentacar().getId() != id) {
+				iterator.remove();
+			}
+		}
+		return reservations;
 	}
 
 	public List<Vehicle> getReservationsByRentaCarID(String dateFrom, String dateUntil, String numberOfSeats,
@@ -243,15 +254,17 @@ public class ReservationRentaCarService {
 		Iterator<Vehicle> iter1 = vehicles.iterator();
 		while (iter1.hasNext()) {
 			Vehicle vehicle = iter1.next();
+			if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
+				iter1.remove();
+			}
+			else if(!vehicle.isAvailable()) {
+				iter1.remove();
+			}
+				
 			for (Long long1 : unavailableVehicles) {
 				if (vehicle.getId().equals(long1)) {
 					iter1.remove();
-				} else if (vehicle.getNumOfSeats() < Integer.parseInt(numberOfSeats)) {
-					iter1.remove();
-					{
-
-					}
-				}
+				} 
 			}
 		}
 		return vehicles;
@@ -286,7 +299,5 @@ public class ReservationRentaCarService {
 
 		return reservationRentaCarRepository.save(reservation);
 	}
-
-
 
 }

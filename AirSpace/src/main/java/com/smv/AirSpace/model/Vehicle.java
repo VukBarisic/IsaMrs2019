@@ -79,6 +79,7 @@ public class Vehicle {
 		this.branchoffice = dto.getBranchOffice();
 		this.cityLocation = dto.getCityLocation();
 		this.idUser = userId;
+		this.available = true;
 	}
 
 

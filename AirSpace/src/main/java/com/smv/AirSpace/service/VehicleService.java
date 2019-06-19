@@ -2,20 +2,24 @@ package com.smv.AirSpace.service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smv.AirSpace.dto.VehicleDTO;
-import com.smv.AirSpace.model.BranchOffice;
 import com.smv.AirSpace.model.Rentacar;
+import com.smv.AirSpace.model.ReservationRentaCar;
 import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.VehicleRepository;
 
 import exceptions.VehicleDoesntExistException;
+import exceptions.VehicleUsedInReservationsException;
+import javassist.expr.NewArray;
 
 @Service
 public class VehicleService {
@@ -28,6 +32,9 @@ public class VehicleService {
 
 	@Autowired
 	UserServiceImpl userService;
+
+	@Autowired
+	ReservationRentaCarService reservationService;
 
 	public Vehicle saveVehicle(VehicleDTO vehicleDTO, Principal principal) {
 		User user = userService.getUserByUsername(principal.getName());
@@ -47,7 +54,25 @@ public class VehicleService {
 
 	}
 
-	public void delete(Long id) {
+	public void delete(Long id, Principal principal) {
+		Rentacar rentaCar = rentaCarService.getLoggedAdminRentacar(principal);
+		List<ReservationRentaCar> reservations = new ArrayList<ReservationRentaCar>();
+		List<Long> vehiclesForrbiden = new ArrayList<>();
+		reservations = reservationService.getReservationsByRentaCar(rentaCar.getId());
+		Vehicle vehicle = findByID(id);
+
+		for (ReservationRentaCar reservationRentaCar : reservations) {
+			if (reservationRentaCar.getVehicle().getId() == id) {
+				vehiclesForrbiden.add(id);
+			}
+		}
+		
+		if (vehiclesForrbiden.contains(id)) {
+			vehicle.setAvailable(false);
+			vehicleRepository.save(vehicle);
+			throw new VehicleUsedInReservationsException();
+		}
+
 		try {
 			vehicleRepository.deleteById(id);
 		} catch (Exception e) {
@@ -104,5 +129,20 @@ public class VehicleService {
 		}
 
 	}
+
+	public List<Vehicle> getByRentaCar(Long id) {
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		vehicles = vehicleRepository.findAll();
+		Iterator<Vehicle> iterator = vehicles.iterator();
+		while (iterator.hasNext()) {
+			Vehicle vehicle = iterator.next();
+			if (vehicle.findRentaCar().getId() != id) {
+				iterator.remove();
+			}
+		}
+		return vehicles;
+	}
+	
+
 
 }

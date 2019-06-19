@@ -113,8 +113,8 @@ public class VehicleController {
 	
 	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@DeleteMapping(value = "/{param}")
-	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Long id) {
-		vehicleService.delete(id);
+	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Long id, Principal principal) {
+		vehicleService.delete(id, principal);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
