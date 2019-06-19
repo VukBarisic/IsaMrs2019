@@ -33,7 +33,7 @@ insert into airspace.branchoffice(id, address, office_name, rentacar_id) values 
 
 insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (1, 1, 'Beograd', 'automatic', 2015,2, 'Audi A3',5, 5, 100, 1, 1);
 insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (2, 1, 'Beograd', 'manual', 2010, 2, 'Toyota Avensis',5, 5, 100, 1, 1);
-insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (3, 1, 'Zemun', 'manual', 2010, 1,2, 'BMW 320d',5, 5, 100, 2, 1);
+insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (3, 1, 'Zemun', 'manual', 2010, 2, 'BMW 320d',5, 5, 100, 2, 1);
 insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (4, 1, 'Zemun', 'automatic', 2015,2, 'Nissan Micra',5, 5, 100, 2, 1);
 insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (5, 1, 'Novi Beograd', 'automatic', 2011,2, 'Mercedes E220',5, 5, 100, 3, 1);
 insert into airspace.vehicle(id, available, city_location, gear_box, godina_proizvodnje, id_user, model, num_of_seats, price_per_day, rating, branchoffice_id, rentacar_id) values (6, 1, 'Novi Beograd', 'manual', 2014,2, 'Opel Insignia',5, 5, 100, 3, 1);
@@ -61,13 +61,25 @@ insert into airspace.user(id, city, company_id, email, first_name, last_name, pa
 insert into airspace.user(id, city, company_id, email, first_name, last_name, password, phone_number, user_status, user_type, username, uuid) values('2', 'Novi Sad', NULL, 'a16105@urhen.com', 'korisnik', 'korisnik', '$2a$10$RjexYK2py4UrWtxxPDFdh.J9.O8fR.oAytviz9zj.ZsIivKHcj6nu', '0211111', '0', '0', 'korisnik', '0f7ff739-7012-4b8a-96c4-680a1f509061');
 insert into airspace.user(id, city, company_id, email, first_name, last_name, password, phone_number, user_status, user_type, username, uuid) values('3', 'Beograd', NULL, 'b1153692@urhen.com', 'korisnik2', 'korisnik2', '$2a$10$IasvmlRPim417STyvGm.J.lhQ/juBIeNIXcCNwwUl.Nnpj9vj.Kqq', '01111111', '0', '0', 'korisnik2', 'b93d6e6d-9014-432c-af73-497337adbb39');
 
-insert into airspace.reservationrentacar(id, date_from, date_until, rentacar_id, user_id, vehicle_id) values ('1', '2019-02-01 00:00:00.000000', '2019-02-07 00:00:00.000000', '1', '1', '1');
-insert into airspace.reservationrentacar(id, date_from, date_until, rentacar_id, user_id, vehicle_id) values ('2', '2019-03-01 00:00:00.000000', '2019-03-07 00:00:00.000000', '1', '3', '2');
-insert into airspace.reservationrentacar(id, date_from, date_until, rentacar_id, user_id, vehicle_id) values ('3', '2019-04-01 00:00:00.000000', '2019-04-07 00:00:00.000000', '2', '1', '3');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('1', '2019-02-01 00:00:00.000000', '2019-02-07 00:00:00.000000','35', '1', '2', '1');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('2', '2019-03-01 00:00:00.000000', '2019-03-07 00:00:00.000000','35', '1', '3', '2');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('3', '2019-04-01 00:00:00.000000', '2019-04-07 00:00:00.000000','35', '1', '2', '2');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('4', '2019-07-01 00:00:00.000000', '2019-07-08 00:00:00.000000','35', '1', '2', '1');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('5', '2019-08-01 00:00:00.000000', '2019-08-08 00:00:00.000000','35', '1', '3', '6');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('6', '2019-09-01 00:00:00.000000', '2019-09-08 00:00:00.000000','35', '1', '2', '3');
 
-insert into airspace.reservationrentacar(id, date_from, date_until, rentacar_id, user_id, vehicle_id) values ('4', '2019-02-01 00:00:00.000000', '2019-02-08 00:00:00.000000', '1', '1', '1');
-insert into airspace.reservationrentacar(id, date_from, date_until, rentacar_id, user_id, vehicle_id) values ('5', '2019-03-01 00:00:00.000000', '2019-03-08 00:00:00.000000', '2', '3', '3');
-insert into airspace.reservationrentacar(id, date_from, date_until, rentacar_id, user_id, vehicle_id) values ('6', '2019-07-01 00:00:00.000000', '2019-07-08 00:00:00.000000', '2', '1', '3');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('7', '2019-05-01 00:00:00.000000', '2019-05-07 00:00:00.000000','35', '2', '2', '8');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('8', '2019-06-01 00:00:00.000000', '2019-06-07 00:00:00.000000','35', '2', '3', '11');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('9', '2019-07-01 00:00:00.000000', '2019-07-07 00:00:00.000000','35', '2', '2', '13');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('10', '2019-08-01 00:00:00.000000', '2019-08-07 00:00:00.000000','35', '2', '2', '13');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('11', '2019-09-01 00:00:00.000000', '2019-09-07 00:00:00.000000','35', '2', '3', '14');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('12', '2019-10-01 00:00:00.000000', '2019-10-07 00:00:00.000000','35', '2', '2', '9');
 
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('13', '2019-05-01 00:00:00.000000', '2019-05-07 00:00:00.000000','35', '3', '2', '16');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('14', '2019-06-01 00:00:00.000000', '2019-06-07 00:00:00.000000','35', '3', '3', '16');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('15', '2019-07-01 00:00:00.000000', '2019-07-07 00:00:00.000000','35', '3', '2', '17');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('16', '2019-08-01 00:00:00.000000', '2019-08-07 00:00:00.000000','35', '3', '2', '19');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('17', '2019-09-01 00:00:00.000000', '2019-09-07 00:00:00.000000','35', '3', '3', '20');
+insert into airspace.reservationrentacar(id, date_from, date_until, total_price, rentacar_id, user_id, vehicle_id) values ('18', '2019-10-01 00:00:00.000000', '2019-10-07 00:00:00.000000','35', '3', '2', '21');
 
 

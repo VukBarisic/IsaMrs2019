@@ -31,6 +31,46 @@ public class ReservationRentaCarService {
 
 	@Autowired
 	HotelServiceImpl hotelService;
+	
+
+	public List<ReservationRentaCar> getReservationReport(String dateFrom, String dateUntil, Long id)
+			throws ParseException {
+		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
+		List<ReservationRentaCar> reservationsReport = new CopyOnWriteArrayList<ReservationRentaCar>();
+		reservations = reservationRentaCarRepository.findAll();
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(dateUntil);
+
+		Iterator<ReservationRentaCar> iterator = reservations.iterator();
+		while (iterator.hasNext()) {
+			ReservationRentaCar reservation = iterator.next();
+			if (reservation.getRentacar().getId() != id) {
+				iterator.remove();
+			}
+		}
+
+		Iterator<ReservationRentaCar> iter = reservations.iterator();
+		while (iter.hasNext()) {
+			ReservationRentaCar reservation = iter.next();
+			if (date1.equals(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				reservationsReport.add(reservation);
+			} else if (date1.equals(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
+				reservationsReport.add(reservation);
+			} else if (date1.before(reservation.getDateFrom()) && date2.equals(reservation.getDateUntil())) {
+				reservationsReport.add(reservation);
+			} else if (date1.before(reservation.getDateFrom()) && date2.after(reservation.getDateUntil())) {
+				reservationsReport.add(reservation);
+			}
+
+		}
+
+		/*
+		 * Iterator<ReservationRentaCar> iterator = reservations.iterator(); while
+		 * (iterator.hasNext()) { ReservationRentaCar reservation = iterator.next(); if
+		 * (reservation.getRentacar().getId() != id) { iterator.remove(); } }
+		 */
+		return reservationsReport;
+	}
 
 	public List<Vehicle> getReservationsByHotelLocation(String dateFrom, String dateUntil, Long hotelId)
 			throws ParseException {
@@ -191,13 +231,11 @@ public class ReservationRentaCarService {
 			Vehicle vehicle = veh.next();
 			if (vehicle.findRentaCar().getId() != id) {
 				veh.remove();
-			}
-			else if((!city.equals("null"))) {
-				if(!(vehicle.getCityLocation().toLowerCase().equals(city.toLowerCase()))) {
-					veh.remove();					
-			}
-			
-				
+			} else if ((!city.equals("null"))) {
+				if (!(vehicle.getCityLocation().toLowerCase().equals(city.toLowerCase()))) {
+					veh.remove();
+				}
+
 			}
 		}
 
@@ -248,5 +286,7 @@ public class ReservationRentaCarService {
 
 		return reservationRentaCarRepository.save(reservation);
 	}
+
+
 
 }

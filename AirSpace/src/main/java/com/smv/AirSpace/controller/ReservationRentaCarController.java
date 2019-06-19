@@ -2,7 +2,6 @@ package com.smv.AirSpace.controller;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,6 +64,13 @@ public class ReservationRentaCarController {
 				reservationRentaCarService.getReservationsByUserID(user.getId()), HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/getReservationReport/{dateFrom}/{dateUntil}/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getReservationReport(@PathVariable("dateFrom") String dateFrom,
+			@PathVariable("dateUntil") String dateUntil, @PathVariable("id") Long id) throws ParseException {
+		return new ResponseEntity<List<ReservationRentaCar>>(
+				reservationRentaCarService.getReservationReport(dateFrom, dateUntil, id), HttpStatus.OK);
+	}
+
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<ReservationRentaCar> addReservation(@RequestBody ReservationRentaCarDTO reservationDTO)
 			throws ParseException {
@@ -72,11 +78,18 @@ public class ReservationRentaCarController {
 		Vehicle vehicle = vehicleService.findByID(reservationDTO.getVehicleId());
 		Rentacar rentaCar = vehicle.findRentaCar();
 		User user = userService.getLoggedUser();
+		int totalPrice;
+		long dateDiff;
+		dateDiff = reservationDTO.getDateUntil().getTime() - reservationDTO.getDateFrom().getTime();
+		totalPrice = ((int) (dateDiff / (1000 * 60 * 60 * 24))) * vehicle.getPricePerDay();
+
 		reservation.setUser(user);
 		reservation.setDateFrom(reservationDTO.getDateFrom());
 		reservation.setDateUntil(reservationDTO.getDateUntil());
 		reservation.setRentacar(rentaCar);
 		reservation.setVehicle(vehicle);
+
+		reservation.setTotalPrice(totalPrice);
 
 		reservation = reservationRentaCarService.saveReservation(reservation);
 		return new ResponseEntity<ReservationRentaCar>(reservation, HttpStatus.CREATED);
