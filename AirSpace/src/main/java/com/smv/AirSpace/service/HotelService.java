@@ -2,6 +2,7 @@ package com.smv.AirSpace.service;
 
 import java.util.List;
 
+import com.smv.AirSpace.dto.HotelDTO;
 import com.smv.AirSpace.dto.RoomDTO;
 import com.smv.AirSpace.model.Hotel;
 import com.smv.AirSpace.model.Room;
@@ -20,6 +21,7 @@ public interface HotelService {
 	Hotel findByAdmin(String username);
 	Room findRoomById(long id);
 	public List<Hotel> searchByCity(String name);
+	Boolean updateHotel(HotelDTO hotelDto);
 
 
 }

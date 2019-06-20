@@ -143,7 +143,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean saveHotel(HotelDTO hotelDTO) {
 		if (hotelDTO.getName() == "" || existsHotelName(hotelDTO.getName())) {
-			System.out.println("s");
 			return false;
 		}
 		Hotel hotel = new Hotel(hotelDTO);
@@ -154,7 +153,7 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	public Location locationSetter(String street, String city, String state) {
+	public static Location locationSetter(String street, String city, String state) {
 		Address address = new Address(street, city, state);
 		Location location = new Location(address);
 		return location;
@@ -340,6 +339,6 @@ public class UserServiceImpl implements UserService {
 		return updated;
 
 	}
-	
+
 
 }

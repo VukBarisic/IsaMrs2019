@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smv.AirSpace.dto.HotelDTO;
 import com.smv.AirSpace.dto.RoomDTO;
 import com.smv.AirSpace.model.Hotel;
+import com.smv.AirSpace.model.Location;
 import com.smv.AirSpace.model.Room;
 import com.smv.AirSpace.model.User;
 import com.smv.AirSpace.repository.HotelRepository;
@@ -122,4 +124,21 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return hotels;
 	}
+	
+
+	@Override
+	public Boolean updateHotel(HotelDTO hotelDto) {
+			Hotel hotel = hotelRepository.findByName(hotelDto.getName());
+			hotel.setDescription(hotelDto.getDescription());
+			hotel.setStars(hotelDto.getStars());
+			Location location = UserServiceImpl.locationSetter(hotelDto.getStreet(), hotelDto.getCity(), hotelDto.getState());
+			hotel.setLocation(location);
+			try {
+				hotelRepository.save(hotel);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}			
+	}
+	
 }

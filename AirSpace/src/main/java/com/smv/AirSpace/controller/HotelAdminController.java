@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.smv.AirSpace.dto.AdminUpdateDTO;
+import com.smv.AirSpace.dto.HotelDTO;
 import com.smv.AirSpace.dto.HotelFrontDTO;
 import com.smv.AirSpace.dto.RoomDTO;
 import com.smv.AirSpace.model.Hotel;
@@ -112,6 +113,24 @@ public class HotelAdminController {
 		try {
 			HotelFrontDTO hotel= new HotelFrontDTO(hotelService.findByAdmin(name));
 			return new ResponseEntity<HotelFrontDTO>(hotel, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+		}
+	}
+	
+	@RequestMapping(value = "/update-hotel", method = RequestMethod.PUT)
+	public ResponseEntity updateHotel(@RequestBody HotelDTO hotelDto) {
+
+		boolean retValue;
+
+		try {
+			retValue = hotelService.updateHotel(hotelDto);
+			if (retValue)
+				return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 		} catch (Exception e) {
 
