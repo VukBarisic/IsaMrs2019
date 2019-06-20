@@ -71,7 +71,7 @@ public class ReservationRentaCarService {
 		return reservationsReport;
 	}
 
-	public List<Vehicle> getReservationsByHotelLocation(String dateFrom, String dateUntil, Long hotelId)
+	public List<Vehicle> getReservationsByHotelLocation(String dateFrom, String dateUntil, String hotelName)
 			throws ParseException {
 		List<ReservationRentaCar> reservations = new CopyOnWriteArrayList<ReservationRentaCar>();
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
@@ -87,7 +87,7 @@ public class ReservationRentaCarService {
 		while (iterator.hasNext()) {
 			ReservationRentaCar reservation = iterator.next();
 			if (!(reservation.getVehicle().getCityLocation().toLowerCase()
-					.equals(hotelService.findById(hotelId).getLocation().getAddress().getCity().toLowerCase()))) {
+					.equals(hotelService.findByName(hotelName).getLocation().getAddress().getCity().toLowerCase()))) {
 				iterator.remove();
 			}
 		}
@@ -140,7 +140,7 @@ public class ReservationRentaCarService {
 			Vehicle vehicle = veh.next();
 			// SREDITI HOTEL LOCATION DA BUDE SAMO ADRESA????
 			if (!(vehicle.getCityLocation().toLowerCase()
-					.equals(hotelService.findById(hotelId).getLocation().getAddress().getCity().toLowerCase()))) {
+					.equals(hotelService.findByName(hotelName).getLocation().getAddress().getCity().toLowerCase()))) {
 				veh.remove();
 			}
 		}
