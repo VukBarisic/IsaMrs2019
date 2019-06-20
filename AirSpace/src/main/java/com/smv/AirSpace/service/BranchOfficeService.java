@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.smv.AirSpace.dto.BranchOfficeDTO;
-import com.smv.AirSpace.dto.VehicleDTO;
 import com.smv.AirSpace.model.BranchOffice;
-import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.BranchOfficeRepository;
 
 import exceptions.BranchOfficeDoesntExist;
-import exceptions.VehicleDoesntExistException;
 
 @Service
 public class BranchOfficeService {

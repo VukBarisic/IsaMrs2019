@@ -49,7 +49,7 @@ public class VehicleController {
 			}
 		}		
 		vehicleDTO.setRentacar(rentaCar);
-		Vehicle vehicle = vehicleService.saveVehicle(vehicleDTO);		
+		Vehicle vehicle = vehicleService.saveVehicle(vehicleDTO, principal);		
 		rentaCar.getVehicles().add(vehicle);
 		rentaCarService.saveRentacar(rentaCar);
 		return new ResponseEntity<Vehicle>(vehicle, HttpStatus.CREATED);
@@ -108,13 +108,13 @@ public class VehicleController {
 			}
 		}		
 		vehicle.setRentacar(rentaCar);
-		return new ResponseEntity<Vehicle>(vehicleService.update(vehicle), HttpStatus.OK);
+		return new ResponseEntity<Vehicle>(vehicleService.update(vehicle, principal), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('RENTACAR_ADMIN')")
 	@DeleteMapping(value = "/{param}")
-	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Long id) {
-		vehicleService.delete(id);
+	public ResponseEntity<Void> deleteVehicle(@PathVariable("param") Long id, Principal principal) {
+		vehicleService.delete(id, principal);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

@@ -15,16 +15,16 @@ import com.smv.AirSpace.repository.RoomRepository;
 
 @Service
 public class HotelServiceImpl implements HotelService {
-	
+
 	@Autowired
 	HotelRepository hotelRepository;
-	
+
 	@Autowired
 	RoomRepository roomRepository;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Override
 	public boolean saveRoom(RoomDTO roomDTO) {
 		Hotel hotel = hotelRepository.findByName("dash");
@@ -35,7 +35,7 @@ public class HotelServiceImpl implements HotelService {
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	@Override
@@ -50,18 +50,18 @@ public class HotelServiceImpl implements HotelService {
 
 	@Override
 	public List<Room> getRooms() {
-		//User user  = userService.getLoggedUser();
-		//Hotel hotel = hotelRepository.findById(user.getCompanyId());
+		// User user = userService.getLoggedUser();
+		// Hotel hotel = hotelRepository.findById(user.getCompanyId());
 		List<Room> rooms = new ArrayList<>();
 		Hotel hotel = hotelRepository.findByName("dash");
 		rooms = hotel.getRooms();
 		return rooms;
 	}
-	
+
 	@Override
 	public List<Room> getRoomsShow(String name) {
-		//User user  = userService.getLoggedUser();
-		//Hotel hotel = hotelRepository.findById(user.getCompanyId());
+		// User user = userService.getLoggedUser();
+		// Hotel hotel = hotelRepository.findById(user.getCompanyId());
 		List<Room> rooms = new ArrayList<>();
 		Hotel hotel = hotelRepository.findByName(name);
 		rooms = hotel.getRooms();
@@ -84,7 +84,7 @@ public class HotelServiceImpl implements HotelService {
 	public Hotel findById(long id) {
 		return hotelRepository.findById(id);
 	}
-	
+
 	@Override
 	public List<Hotel> searchByName(String name) {
 		List<Hotel> hotels = new ArrayList<>();
@@ -106,7 +106,6 @@ public class HotelServiceImpl implements HotelService {
 		}
 
 	}
-
 	
 	@Override
 	public Room findRoomById(long id) {
@@ -123,5 +122,4 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return hotels;
 	}
-
 }

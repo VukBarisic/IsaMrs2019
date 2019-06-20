@@ -18,30 +18,29 @@ import exceptions.VehicleDoesntExistException;
 
 @Service
 public class RentacarServiceImpl implements RentacarService {
-	
+
 	@Autowired
 	RentacarRepository rentacarRepository;
-	
-	@Autowired 
+
+	@Autowired
 	UserServiceImpl userService;
 
 	@Override
 	public void saveRentacar(Rentacar rentacar) {
 		rentacarRepository.save(rentacar);
 	}
-	
+
 	public Rentacar update(RentacarDTO rentacarDTO) {
 		try {
 			findByID(rentacarDTO.getId());
-			Rentacar rentacar= new Rentacar(rentacarDTO);
+			Rentacar rentacar = new Rentacar(rentacarDTO);
 			rentacarRepository.save(rentacar);
 			return rentacar;
 		} catch (Exception e) {
 			throw new RentacarDoesntExistException();
 		}
 	}
-	
-	
+
 	public Optional<Rentacar> findByID(Long id) {
 		return rentacarRepository.findById(id);
 	}
@@ -62,18 +61,16 @@ public class RentacarServiceImpl implements RentacarService {
 		} catch (Exception e) {
 			throw new VehicleDoesntExistException();
 		}
-		
+
 	}
-	
+
 	public Rentacar getLoggedAdminRentacar(Principal principal) {
-		User user =  userService.getUserByUsername(principal.getName());
+		User user = userService.getUserByUsername(principal.getName());
 		System.err.println(principal.getName());
-		if(user!=null && user.getUserType()==UserType.RENTACAR_ADMIN) {
+		if (user != null && user.getUserType() == UserType.RENTACAR_ADMIN) {
 			return findByID(user.getCompanyId()).orElse(null);
 		}
 		return null;
 	}
-
-	
 
 }
