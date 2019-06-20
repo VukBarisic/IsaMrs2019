@@ -46,13 +46,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
 		return authenticationTokenFilter;
 	}
-	/*
+	
 	@Bean
 	public MyCorsFilter myCorsFilteBean() throws Exception {
 		MyCorsFilter myCorsFilter = new MyCorsFilter();
 		return myCorsFilter;
 	}
-*/
+
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 			.cors().and()
 		.authorizeRequests()
-			.antMatchers("/**").permitAll(); // iskljucio sam security da bih mogao da radim za sad
+			.antMatchers("/**").permitAll();
 		
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 		//httpSecurity.addFilterBefore(myCorsFilteBean(), Filter.class);

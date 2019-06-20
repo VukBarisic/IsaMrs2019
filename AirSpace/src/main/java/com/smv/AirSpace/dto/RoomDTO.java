@@ -10,6 +10,7 @@ public class RoomDTO {
 	private int floor;
 	private RoomType roomType;
 	private int numOfBeds;
+	private double price;
 	
 	
 	public RoomDTO() {
@@ -20,6 +21,7 @@ public class RoomDTO {
 		this.floor = room.getFloor();
 		this.roomType = room.getRoomType();
 		this.numOfBeds = room.getNumOfBeds();
+		this.price = room.getPrice();
 	}
 	public Long getId() {
 		return id;
@@ -51,7 +53,11 @@ public class RoomDTO {
 	public void setNumOfBeds(int numOfBeds) {
 		this.numOfBeds = numOfBeds;
 	}
-
-	
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	
 }

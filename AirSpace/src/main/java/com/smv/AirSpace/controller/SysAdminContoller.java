@@ -208,9 +208,24 @@ public class SysAdminContoller {
 	}
 	
 	@RequestMapping(value = "/search_by_name/{name}", method = RequestMethod.GET)
-    public ResponseEntity<List<Hotel>> searchByName(@PathVariable("name") String name) {
+    public ResponseEntity<List<HotelFrontDTO>> searchByName(@PathVariable("name") String name) {
     	List<Hotel> hotels = hotelService.searchByName(name);
-    	return new ResponseEntity<List<Hotel>>(hotels, HttpStatus.OK);
+    	List<HotelFrontDTO> hotelsFront = new ArrayList<>();
+    	for (Hotel hotel: hotels) {
+    		hotelsFront.add(new HotelFrontDTO(hotel));
+    	}
+    	return new ResponseEntity<List<HotelFrontDTO>>(hotelsFront, HttpStatus.OK);
     }
+	
+	@RequestMapping(value = "/search_by_city/{name}", method = RequestMethod.GET)
+    public ResponseEntity<List<HotelFrontDTO>> searchByCity(@PathVariable("name") String name) {
+    	List<Hotel> hotels = hotelService.searchByCity(name);
+    	List<HotelFrontDTO> hotelsFront = new ArrayList<>();
+    	for (Hotel hotel: hotels) {
+    		hotelsFront.add(new HotelFrontDTO(hotel));
+    	}
+    	return new ResponseEntity<List<HotelFrontDTO>>(hotelsFront, HttpStatus.OK);
+    }
+
 
 }

@@ -11,13 +11,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smv.AirSpace.dto.ReservationRentaCarDTO;
 import com.smv.AirSpace.model.ReservationRentaCar;
 import com.smv.AirSpace.model.Vehicle;
 import com.smv.AirSpace.repository.ReservationRentaCarRepository;
 
 import exceptions.ReservationDoesntExistException;
-import exceptions.VehicleDoesntExistException;
 
 @Service
 public class ReservationRentaCarService {

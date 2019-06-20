@@ -22,11 +22,11 @@ public class RoomReservation {
 	private Long id;
 	private Date startDate;
 	private Date endDate;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne()
 	private Room room;
 	private double price;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private RegisteredUser customer;
+	@ManyToOne()
+	private User customer;
 	private int numOfGuests;
 
 	public RoomReservation() {
@@ -84,11 +84,11 @@ public class RoomReservation {
 		this.price = price;
 	}
 
-	public RegisteredUser getcustomer() {
+	public User getCustomer() {
 		return customer;
 	}
 
-	public void setcustomer(RegisteredUser customer) {
+	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
 

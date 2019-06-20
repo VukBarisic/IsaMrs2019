@@ -1,13 +1,18 @@
 package com.smv.AirSpace.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.smv.AirSpace.dto.RoomDTO;
@@ -29,6 +34,8 @@ public class Room {
 	private double rating;
 	@ManyToOne()
 	private Hotel hotel;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
+    private List<RoomReservation> reservations;
 
 	public Room() {
 
@@ -52,6 +59,7 @@ public class Room {
 		this.floor = roomDTO.getFloor();
 		this.roomType = roomDTO.getRoomType();
 		this.numOfBeds = roomDTO.getNumOfBeds();
+		this.price = roomDTO.getPrice();
 	}
 
 	public Long getId() {

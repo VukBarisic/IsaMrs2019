@@ -108,11 +108,20 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	
+	@Override
+	public Room findRoomById(long id) {
+		return roomRepository.findById(id);
+	}
 
-
-
-	
-	
-	
+	@Override
+	public List<Hotel> searchByCity(String name) {
+		List<Hotel> hotels = new ArrayList<>();
+		for (Hotel c : hotelRepository.findAll()) {
+			if (c.getLocation().getAddress().getCity().toLowerCase().contains(name.toLowerCase())) {
+				hotels.add(c);
+			}
+		}
+		return hotels;
+	}
 
 }

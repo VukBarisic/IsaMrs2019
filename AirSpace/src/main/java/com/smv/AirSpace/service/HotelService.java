@@ -18,6 +18,8 @@ public interface HotelService {
 	List<Hotel> searchByName(String name);
 	boolean deleteRoom(long id);
 	Hotel findByAdmin(String username);
+	Room findRoomById(long id);
+	public List<Hotel> searchByCity(String name);
 
 
 }

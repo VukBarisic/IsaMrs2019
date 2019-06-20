@@ -43,6 +43,9 @@ public class User {
 	
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
     private List<ReservationRentaCar> reservations;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<RoomReservation> roomReservations;
 	
 
 
@@ -229,7 +232,7 @@ public class User {
 		this.companyId = companyId;
 	}
 
-
+	
 
 
 	

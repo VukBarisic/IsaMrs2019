@@ -32,5 +32,7 @@ public interface UserService {
 	public boolean updateHotelAdmin(AdminUpdateDTO adminUpdate);
 	
 	public User findByUsername(String username);
+	
+	public User getLoggedUser();
 
 }
