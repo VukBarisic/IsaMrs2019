@@ -29,7 +29,7 @@ public class Vehicle {
 	private int numOfSeats;
 	private int godinaProizvodnje;
 	private boolean available;
-	private double rating;
+	private int sale;
 	
 	private Long idUser;
 	private String cityLocation;
@@ -48,13 +48,13 @@ public class Vehicle {
 	public Vehicle() {
 	}
 
-	public Vehicle(Long id, String model, int numOfSeats,String gearBox, boolean available, double rating) {
+	public Vehicle(Long id, String model, int numOfSeats,String gearBox, boolean available, int sale) {
 		this.id = id;
 		this.model = model;
 		this.gearBox = gearBox;
 		this.numOfSeats = numOfSeats;
 		this.available = available;
-		this.rating = rating;
+		this.sale = sale;
 	}
 	
 	public Vehicle(Long id, String model, String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay) {
@@ -64,7 +64,7 @@ public class Vehicle {
 		this.numOfSeats = numOfSeats;
 		this.godinaProizvodnje = godinaProizvodnje;
 		this.available = true;
-		this.rating = 100.0;
+		this.sale = 1;
 		this.pricePerDay = pricePerDay;
 	}
 	
@@ -80,6 +80,7 @@ public class Vehicle {
 		this.cityLocation = dto.getCityLocation();
 		this.idUser = userId;
 		this.available = true;
+		this.sale = dto.getSale();
 	}
 
 
@@ -115,12 +116,12 @@ public class Vehicle {
 		this.available = available;
 	}
 
-	public double getRating() {
-		return rating;
+	public int getSale() {
+		return sale;
 	}
 
-	public void setRating(double rating) {
-		this.rating = rating;
+	public void setSale(int sale) {
+		this.sale = sale;
 	}
 
 	public String getGearBox() {
