@@ -51,11 +51,11 @@ public class ReservationRentaCarController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/getVehicleByDateAndHotelId/{dateFrom}/{dateUntil}/{hotelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/getVehicleByDateAndHotelName/{dateFrom}/{dateUntil}/{hotelName}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getVehicleByDateAndHotelId(@PathVariable("dateFrom") String dateFrom,
-			@PathVariable("dateUntil") String dateUntil, @PathVariable("hotelId") Long hotelId) throws ParseException {
+			@PathVariable("dateUntil") String dateUntil, @PathVariable("hotelName") String hotelName) throws ParseException {
 		return new ResponseEntity<List<Vehicle>>(
-				reservationRentaCarService.getReservationsByHotelLocation(dateFrom, dateUntil, hotelId), HttpStatus.OK);
+				reservationRentaCarService.getReservationsByHotelLocation(dateFrom, dateUntil, hotelName), HttpStatus.OK);
 	}
 	@PreAuthorize("hasAuthority('REGISTERED_USER')")
 	@GetMapping(value = "/getReservationByUser", produces = MediaType.APPLICATION_JSON_VALUE)
