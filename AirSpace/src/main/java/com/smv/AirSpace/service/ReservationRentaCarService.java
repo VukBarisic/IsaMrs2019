@@ -143,7 +143,11 @@ public class ReservationRentaCarService {
 					.equals(hotelService.findByName(hotelName).getLocation().getAddress().getCity().toLowerCase()))) {
 				veh.remove();
 			}
+			else if(vehicle.getSale()==0) {
+				veh.remove();
+			}
 		}
+		
 		// Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
 		Iterator<Vehicle> iter1 = vehicles.iterator();
 		while (iter1.hasNext()) {
@@ -242,12 +246,18 @@ public class ReservationRentaCarService {
 			Vehicle vehicle = veh.next();
 			if (vehicle.findRentaCar().getId() != id) {
 				veh.remove();
-			} else if ((!city.equals("null"))) {
+			} 
+			else if(vehicle.getSale()!=0) {
+				veh.remove();
+			}
+			else if ((!city.equals("null"))) {
 				if (!(vehicle.getCityLocation().toLowerCase().equals(city.toLowerCase()))) {
 					veh.remove();
 				}
-
 			}
+			
+
+			
 		}
 
 		// Brise vozilo zbog duplikata koji ispunjavaju uslov pretrage
@@ -296,7 +306,9 @@ public class ReservationRentaCarService {
 	}
 
 	public ReservationRentaCar saveReservation(ReservationRentaCar reservation) {
-
+		if(reservation.getVehicle().getSale()!=0) {
+			reservation.setTotalPrice(reservation.getTotalPrice() * (100 -reservation.getVehicle().getSale())/100);
+		}
 		return reservationRentaCarRepository.save(reservation);
 	}
 

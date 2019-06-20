@@ -13,6 +13,7 @@ public class VehicleDTO {
 	private Long idOffice;
 	private int pricePerDay;
 	private String cityLocation;
+	private int sale;
 	
 	//test
 	private Rentacar rentacar;
@@ -21,7 +22,7 @@ public class VehicleDTO {
 	public VehicleDTO() {
 		super();
 	}
-	public VehicleDTO(String model,String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay, String cityLocation) {
+	public VehicleDTO(String model,String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay, String cityLocation, int sale) {
 
 		this.model = model;
 		this.gearBox = gearBox;
@@ -30,9 +31,10 @@ public class VehicleDTO {
 		this.idOffice = idOffice;
 		this.pricePerDay = pricePerDay;
 		this.cityLocation = cityLocation;
+		this.sale = sale;
 		
 	}
-	public VehicleDTO(long id, String model,String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay, String cityLocation) {
+	public VehicleDTO(long id, String model,String gearBox, int numOfSeats, int godinaProizvodnje, Long idOffice, int pricePerDay, String cityLocation, int sale) {
 
 		this.model = model;
 		this.gearBox = gearBox;
@@ -42,6 +44,7 @@ public class VehicleDTO {
 		this.pricePerDay = pricePerDay;
 		this.id = id;
 		this.cityLocation = cityLocation;
+		this.sale = sale;
 		
 		
 	}
@@ -111,6 +114,12 @@ public class VehicleDTO {
 	}
 	public void setCityLocation(String cityLocation) {
 		this.cityLocation = cityLocation;
+	}
+	public int getSale() {
+		return sale;
+	}
+	public void setSale(int sale) {
+		this.sale = sale;
 	}
 	
 	
